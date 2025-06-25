@@ -1,0 +1,2116 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <script>
+        if (navigator.userAgent.match(/MSIE|Internet Explorer/i) || navigator.userAgent.match(/Trident\/7\..*?rv:11/i)) {
+            var href = document.location.href;
+            if (!href.match(/[?&]nowprocket/)) {
+                if (href.indexOf("?") == -1) {
+                    if (href.indexOf("#") == -1) {
+                        document.location.href = href + "?nowprocket=1"
+                    } else {
+                        document.location.href = href.replace("#", "?nowprocket=1#")
+                    }
+                } else {
+                    if (href.indexOf("#") == -1) {
+                        document.location.href = href + "&nowprocket=1"
+                    } else {
+                        document.location.href = href.replace("#", "&nowprocket=1#")
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        (() => {
+            class RocketLazyLoadScripts {
+                constructor() {
+                    this.v = "2.0.3", this.userEvents = ["keydown", "keyup", "mousedown", "mouseup", "mousemove", "mouseover", "mouseenter", "mouseout", "mouseleave", "touchmove", "touchstart", "touchend", "touchcancel", "wheel", "click", "dblclick", "input", "visibilitychange"], this.attributeEvents = ["onblur", "onclick", "oncontextmenu", "ondblclick", "onfocus", "onmousedown", "onmouseenter", "onmouseleave", "onmousemove", "onmouseout", "onmouseover", "onmouseup", "onmousewheel", "onscroll", "onsubmit"]
+                }
+                async t() {
+                    this.i(), this.o(), /iP(ad|hone)/.test(navigator.userAgent) && this.h(), this.u(), this.l(this), this.m(), this.k(this), this.p(this), this._(), await Promise.all([this.R(), this.L()]), this.lastBreath = Date.now(), this.S(this), this.P(), this.D(), this.O(), this.M(), await this.C(this.delayedScripts.normal), await this.C(this.delayedScripts.defer), await this.C(this.delayedScripts.async), this.F("domReady"), await this.T(), await this.j(), await this.I(), this.F("windowLoad"), await this.A(), window.dispatchEvent(new Event("rocket-allScriptsLoaded")), this.everythingLoaded = !0, this.lastTouchEnd && await new Promise((t => setTimeout(t, 500 - Date.now() + this.lastTouchEnd))), this.H(), this.F("all"), this.U(), this.W()
+                }
+                i() {
+                    this.CSPIssue = sessionStorage.getItem("rocketCSPIssue"), document.addEventListener("securitypolicyviolation", (t => {
+                        this.CSPIssue || "script-src-elem" !== t.violatedDirective || "data" !== t.blockedURI || (this.CSPIssue = !0, sessionStorage.setItem("rocketCSPIssue", !0))
+                    }), {
+                        isRocket: !0
+                    })
+                }
+                o() {
+                    window.addEventListener("pageshow", (t => {
+                        this.persisted = t.persisted, this.realWindowLoadedFired = !0
+                    }), {
+                        isRocket: !0
+                    }), window.addEventListener("pagehide", (() => {
+                        this.onFirstUserAction = null
+                    }), {
+                        isRocket: !0
+                    })
+                }
+                h() {
+                    let t;
+
+                    function e(e) {
+                        t = e
+                    }
+                    window.addEventListener("touchstart", e, {
+                        isRocket: !0
+                    }), window.addEventListener("touchend", (function i(o) {
+                        Math.abs(o.changedTouches[0].pageX - t.changedTouches[0].pageX) < 10 && Math.abs(o.changedTouches[0].pageY - t.changedTouches[0].pageY) < 10 && o.timeStamp - t.timeStamp < 200 && (o.target.dispatchEvent(new PointerEvent("click", {
+                            target: o.target,
+                            bubbles: !0,
+                            cancelable: !0,
+                            detail: 1
+                        })), event.preventDefault(), window.removeEventListener("touchstart", e, {
+                            isRocket: !0
+                        }), window.removeEventListener("touchend", i, {
+                            isRocket: !0
+                        }))
+                    }), {
+                        isRocket: !0
+                    })
+                }
+                q(t) {
+                    this.userActionTriggered || ("mousemove" !== t.type || this.firstMousemoveIgnored ? "keyup" === t.type || "mouseover" === t.type || "mouseout" === t.type || (this.userActionTriggered = !0, this.onFirstUserAction && this.onFirstUserAction()) : this.firstMousemoveIgnored = !0), "click" === t.type && t.preventDefault(), this.savedUserEvents.length > 0 && (t.stopPropagation(), t.stopImmediatePropagation()), "touchstart" === this.lastEvent && "touchend" === t.type && (this.lastTouchEnd = Date.now()), "click" === t.type && (this.lastTouchEnd = 0), this.lastEvent = t.type, this.savedUserEvents.push(t)
+                }
+                u() {
+                    this.savedUserEvents = [], this.userEventHandler = this.q.bind(this), this.userEvents.forEach((t => window.addEventListener(t, this.userEventHandler, {
+                        passive: !1,
+                        isRocket: !0
+                    })))
+                }
+                U() {
+                    this.userEvents.forEach((t => window.removeEventListener(t, this.userEventHandler, {
+                        passive: !1,
+                        isRocket: !0
+                    }))), this.savedUserEvents.forEach((t => {
+                        t.target.dispatchEvent(new window[t.constructor.name](t.type, t))
+                    }))
+                }
+                m() {
+                    this.eventsMutationObserver = new MutationObserver((t => {
+                        const e = "return false";
+                        for (const i of t) {
+                            if ("attributes" === i.type) {
+                                const t = i.target.getAttribute(i.attributeName);
+                                t && t !== e && (i.target.setAttribute("data-rocket-" + i.attributeName, t), i.target["rocket" + i.attributeName] = new Function("event", t), i.target.setAttribute(i.attributeName, e))
+                            }
+                            "childList" === i.type && i.addedNodes.forEach((t => {
+                                if (t.nodeType === Node.ELEMENT_NODE)
+                                    for (const i of t.attributes) this.attributeEvents.includes(i.name) && i.value && "" !== i.value && (t.setAttribute("data-rocket-" + i.name, i.value), t["rocket" + i.name] = new Function("event", i.value), t.setAttribute(i.name, e))
+                            }))
+                        }
+                    })), this.eventsMutationObserver.observe(document, {
+                        subtree: !0,
+                        childList: !0,
+                        attributeFilter: this.attributeEvents
+                    })
+                }
+                H() {
+                    this.eventsMutationObserver.disconnect(), this.attributeEvents.forEach((t => {
+                        document.querySelectorAll("[data-rocket-" + t + "]").forEach((e => {
+                            e.setAttribute(t, e.getAttribute("data-rocket-" + t)), e.removeAttribute("data-rocket-" + t)
+                        }))
+                    }))
+                }
+                k(t) {
+                    Object.defineProperty(HTMLElement.prototype, "onclick", {
+                        get() {
+                            return this.rocketonclick || null
+                        },
+                        set(e) {
+                            this.rocketonclick = e, this.setAttribute(t.everythingLoaded ? "onclick" : "data-rocket-onclick", "this.rocketonclick(event)")
+                        }
+                    })
+                }
+                S(t) {
+                    function e(e, i) {
+                        let o = e[i];
+                        e[i] = null, Object.defineProperty(e, i, {
+                            get: () => o,
+                            set(s) {
+                                t.everythingLoaded ? o = s : e["rocket" + i] = o = s
+                            }
+                        })
+                    }
+                    e(document, "onreadystatechange"), e(window, "onload"), e(window, "onpageshow");
+                    try {
+                        Object.defineProperty(document, "readyState", {
+                            get: () => t.rocketReadyState,
+                            set(e) {
+                                t.rocketReadyState = e
+                            },
+                            configurable: !0
+                        }), document.readyState = "loading"
+                    } catch (t) {
+                        console.log("WPRocket DJE readyState conflict, bypassing")
+                    }
+                }
+                l(t) {
+                    this.originalAddEventListener = EventTarget.prototype.addEventListener, this.originalRemoveEventListener = EventTarget.prototype.removeEventListener, this.savedEventListeners = [], EventTarget.prototype.addEventListener = function(e, i, o) {
+                        o && o.isRocket || !t.B(e, this) && !t.userEvents.includes(e) || t.B(e, this) && !t.userActionTriggered || e.startsWith("rocket-") || t.everythingLoaded ? t.originalAddEventListener.call(this, e, i, o) : t.savedEventListeners.push({
+                            target: this,
+                            remove: !1,
+                            type: e,
+                            func: i,
+                            options: o
+                        })
+                    }, EventTarget.prototype.removeEventListener = function(e, i, o) {
+                        o && o.isRocket || !t.B(e, this) && !t.userEvents.includes(e) || t.B(e, this) && !t.userActionTriggered || e.startsWith("rocket-") || t.everythingLoaded ? t.originalRemoveEventListener.call(this, e, i, o) : t.savedEventListeners.push({
+                            target: this,
+                            remove: !0,
+                            type: e,
+                            func: i,
+                            options: o
+                        })
+                    }
+                }
+                F(t) {
+                    "all" === t && (EventTarget.prototype.addEventListener = this.originalAddEventListener, EventTarget.prototype.removeEventListener = this.originalRemoveEventListener), this.savedEventListeners = this.savedEventListeners.filter((e => {
+                        let i = e.type,
+                            o = e.target || window;
+                        return "domReady" === t && "DOMContentLoaded" !== i && "readystatechange" !== i || ("windowLoad" === t && "load" !== i && "readystatechange" !== i && "pageshow" !== i || (this.B(i, o) && (i = "rocket-" + i), e.remove ? o.removeEventListener(i, e.func, e.options) : o.addEventListener(i, e.func, e.options), !1))
+                    }))
+                }
+                p(t) {
+                    let e;
+
+                    function i(e) {
+                        return t.everythingLoaded ? e : e.split(" ").map((t => "load" === t || t.startsWith("load.") ? "rocket-jquery-load" : t)).join(" ")
+                    }
+
+                    function o(o) {
+                        function s(e) {
+                            const s = o.fn[e];
+                            o.fn[e] = o.fn.init.prototype[e] = function() {
+                                return this[0] === window && t.userActionTriggered && ("string" == typeof arguments[0] || arguments[0] instanceof String ? arguments[0] = i(arguments[0]) : "object" == typeof arguments[0] && Object.keys(arguments[0]).forEach((t => {
+                                    const e = arguments[0][t];
+                                    delete arguments[0][t], arguments[0][i(t)] = e
+                                }))), s.apply(this, arguments), this
+                            }
+                        }
+                        if (o && o.fn && !t.allJQueries.includes(o)) {
+                            const e = {
+                                DOMContentLoaded: [],
+                                "rocket-DOMContentLoaded": []
+                            };
+                            for (const t in e) document.addEventListener(t, (() => {
+                                e[t].forEach((t => t()))
+                            }), {
+                                isRocket: !0
+                            });
+                            o.fn.ready = o.fn.init.prototype.ready = function(i) {
+                                function s() {
+                                    parseInt(o.fn.jquery) > 2 ? setTimeout((() => i.bind(document)(o))) : i.bind(document)(o)
+                                }
+                                return t.realDomReadyFired ? !t.userActionTriggered || t.fauxDomReadyFired ? s() : e["rocket-DOMContentLoaded"].push(s) : e.DOMContentLoaded.push(s), o([])
+                            }, s("on"), s("one"), s("off"), t.allJQueries.push(o)
+                        }
+                        e = o
+                    }
+                    t.allJQueries = [], o(window.jQuery), Object.defineProperty(window, "jQuery", {
+                        get: () => e,
+                        set(t) {
+                            o(t)
+                        }
+                    })
+                }
+                P() {
+                    const t = new Map;
+                    document.write = document.writeln = function(e) {
+                        const i = document.currentScript,
+                            o = document.createRange(),
+                            s = i.parentElement;
+                        let n = t.get(i);
+                        void 0 === n && (n = i.nextSibling, t.set(i, n));
+                        const c = document.createDocumentFragment();
+                        o.setStart(c, 0), c.appendChild(o.createContextualFragment(e)), s.insertBefore(c, n)
+                    }
+                }
+                async R() {
+                    return new Promise((t => {
+                        this.userActionTriggered ? t() : this.onFirstUserAction = t
+                    }))
+                }
+                async L() {
+                    return new Promise((t => {
+                        document.addEventListener("DOMContentLoaded", (() => {
+                            this.realDomReadyFired = !0, t()
+                        }), {
+                            isRocket: !0
+                        })
+                    }))
+                }
+                async I() {
+                    return this.realWindowLoadedFired ? Promise.resolve() : new Promise((t => {
+                        window.addEventListener("load", t, {
+                            isRocket: !0
+                        })
+                    }))
+                }
+                M() {
+                    this.pendingScripts = [];
+                    this.scriptsMutationObserver = new MutationObserver((t => {
+                        for (const e of t) e.addedNodes.forEach((t => {
+                            "SCRIPT" !== t.tagName || t.noModule || t.isWPRocket || this.pendingScripts.push({
+                                script: t,
+                                promise: new Promise((e => {
+                                    const i = () => {
+                                        const i = this.pendingScripts.findIndex((e => e.script === t));
+                                        i >= 0 && this.pendingScripts.splice(i, 1), e()
+                                    };
+                                    t.addEventListener("load", i, {
+                                        isRocket: !0
+                                    }), t.addEventListener("error", i, {
+                                        isRocket: !0
+                                    }), setTimeout(i, 1e3)
+                                }))
+                            })
+                        }))
+                    })), this.scriptsMutationObserver.observe(document, {
+                        childList: !0,
+                        subtree: !0
+                    })
+                }
+                async j() {
+                    await this.J(), this.pendingScripts.length ? (await this.pendingScripts[0].promise, await this.j()) : this.scriptsMutationObserver.disconnect()
+                }
+                D() {
+                    this.delayedScripts = {
+                        normal: [],
+                        async: [],
+                        defer: []
+                    }, document.querySelectorAll("script[type$=rocketlazyloadscript]").forEach((t => {
+                        t.hasAttribute("data-rocket-src") ? t.hasAttribute("async") && !1 !== t.async ? this.delayedScripts.async.push(t) : t.hasAttribute("defer") && !1 !== t.defer || "module" === t.getAttribute("data-rocket-type") ? this.delayedScripts.defer.push(t) : this.delayedScripts.normal.push(t) : this.delayedScripts.normal.push(t)
+                    }))
+                }
+                async _() {
+                    await this.L();
+                    let t = [];
+                    document.querySelectorAll("script[type$=rocketlazyloadscript][data-rocket-src]").forEach((e => {
+                        let i = e.getAttribute("data-rocket-src");
+                        if (i && !i.startsWith("data:")) {
+                            i.startsWith("//") && (i = location.protocol + i);
+                            try {
+                                const o = new URL(i).origin;
+                                o !== location.origin && t.push({
+                                    src: o,
+                                    crossOrigin: e.crossOrigin || "module" === e.getAttribute("data-rocket-type")
+                                })
+                            } catch (t) {}
+                        }
+                    })), t = [...new Map(t.map((t => [JSON.stringify(t), t]))).values()], this.N(t, "preconnect")
+                }
+                async $(t) {
+                    if (await this.G(), !0 !== t.noModule || !("noModule" in HTMLScriptElement.prototype)) return new Promise((e => {
+                        let i;
+
+                        function o() {
+                            (i || t).setAttribute("data-rocket-status", "executed"), e()
+                        }
+                        try {
+                            if (navigator.userAgent.includes("Firefox/") || "" === navigator.vendor || this.CSPIssue) i = document.createElement("script"), [...t.attributes].forEach((t => {
+                                let e = t.nodeName;
+                                "type" !== e && ("data-rocket-type" === e && (e = "type"), "data-rocket-src" === e && (e = "src"), i.setAttribute(e, t.nodeValue))
+                            })), t.text && (i.text = t.text), t.nonce && (i.nonce = t.nonce), i.hasAttribute("src") ? (i.addEventListener("load", o, {
+                                isRocket: !0
+                            }), i.addEventListener("error", (() => {
+                                i.setAttribute("data-rocket-status", "failed-network"), e()
+                            }), {
+                                isRocket: !0
+                            }), setTimeout((() => {
+                                i.isConnected || e()
+                            }), 1)) : (i.text = t.text, o()), i.isWPRocket = !0, t.parentNode.replaceChild(i, t);
+                            else {
+                                const i = t.getAttribute("data-rocket-type"),
+                                    s = t.getAttribute("data-rocket-src");
+                                i ? (t.type = i, t.removeAttribute("data-rocket-type")) : t.removeAttribute("type"), t.addEventListener("load", o, {
+                                    isRocket: !0
+                                }), t.addEventListener("error", (i => {
+                                    this.CSPIssue && i.target.src.startsWith("data:") ? (console.log("WPRocket: CSP fallback activated"), t.removeAttribute("src"), this.$(t).then(e)) : (t.setAttribute("data-rocket-status", "failed-network"), e())
+                                }), {
+                                    isRocket: !0
+                                }), s ? (t.fetchPriority = "high", t.removeAttribute("data-rocket-src"), t.src = s) : t.src = "data:text/javascript;base64," + window.btoa(unescape(encodeURIComponent(t.text)))
+                            }
+                        } catch (i) {
+                            t.setAttribute("data-rocket-status", "failed-transform"), e()
+                        }
+                    }));
+                    t.setAttribute("data-rocket-status", "skipped")
+                }
+                async C(t) {
+                    const e = t.shift();
+                    return e ? (e.isConnected && await this.$(e), this.C(t)) : Promise.resolve()
+                }
+                O() {
+                    this.N([...this.delayedScripts.normal, ...this.delayedScripts.defer, ...this.delayedScripts.async], "preload")
+                }
+                N(t, e) {
+                    this.trash = this.trash || [];
+                    let i = !0;
+                    var o = document.createDocumentFragment();
+                    t.forEach((t => {
+                        const s = t.getAttribute && t.getAttribute("data-rocket-src") || t.src;
+                        if (s && !s.startsWith("data:")) {
+                            const n = document.createElement("link");
+                            n.href = s, n.rel = e, "preconnect" !== e && (n.as = "script", n.fetchPriority = i ? "high" : "low"), t.getAttribute && "module" === t.getAttribute("data-rocket-type") && (n.crossOrigin = !0), t.crossOrigin && (n.crossOrigin = t.crossOrigin), t.integrity && (n.integrity = t.integrity), t.nonce && (n.nonce = t.nonce), o.appendChild(n), this.trash.push(n), i = !1
+                        }
+                    })), document.head.appendChild(o)
+                }
+                W() {
+                    this.trash.forEach((t => t.remove()))
+                }
+                async T() {
+                    try {
+                        document.readyState = "interactive"
+                    } catch (t) {}
+                    this.fauxDomReadyFired = !0;
+                    try {
+                        await this.G(), document.dispatchEvent(new Event("rocket-readystatechange")), await this.G(), document.rocketonreadystatechange && document.rocketonreadystatechange(), await this.G(), document.dispatchEvent(new Event("rocket-DOMContentLoaded")), await this.G(), window.dispatchEvent(new Event("rocket-DOMContentLoaded"))
+                    } catch (t) {
+                        console.error(t)
+                    }
+                }
+                async A() {
+                    try {
+                        document.readyState = "complete"
+                    } catch (t) {}
+                    try {
+                        await this.G(), document.dispatchEvent(new Event("rocket-readystatechange")), await this.G(), document.rocketonreadystatechange && document.rocketonreadystatechange(), await this.G(), window.dispatchEvent(new Event("rocket-load")), await this.G(), window.rocketonload && window.rocketonload(), await this.G(), this.allJQueries.forEach((t => t(window).trigger("rocket-jquery-load"))), await this.G();
+                        const t = new Event("rocket-pageshow");
+                        t.persisted = this.persisted, window.dispatchEvent(t), await this.G(), window.rocketonpageshow && window.rocketonpageshow({
+                            persisted: this.persisted
+                        })
+                    } catch (t) {
+                        console.error(t)
+                    }
+                }
+                async G() {
+                    Date.now() - this.lastBreath > 45 && (await this.J(), this.lastBreath = Date.now())
+                }
+                async J() {
+                    return document.hidden ? new Promise((t => setTimeout(t))) : new Promise((t => requestAnimationFrame(t)))
+                }
+                B(t, e) {
+                    return e === document && "readystatechange" === t || (e === document && "DOMContentLoaded" === t || (e === window && "DOMContentLoaded" === t || (e === window && "load" === t || e === window && "pageshow" === t)))
+                }
+                static run() {
+                    (new RocketLazyLoadScripts).t()
+                }
+            }
+            RocketLazyLoadScripts.run()
+        })();
+    </script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+    <style>
+        img:is([sizes="auto" i], [sizes^="auto," i]) {
+            contain-intrinsic-size: 3000px 1500px
+        }
+    </style>
+
+    <!-- This site is optimized with the Yoast SEO plugin v25.3.1 - https://yoast.com/wordpress/plugins/seo/ -->
+    <title>Tax Resolution - Tax Defense Group</title>
+    <link rel="canonical" href="https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Tax Resolution - Tax Defense Group" />
+    <meta property="og:description" content="Tax Resolution If you have been placed in collections or are facing penalties by the IRS, we at The Tax Defense Group are here to help you find the perfect tax resolution for your tax problems. The Tax Defense Group can provide you with the proper guidance and advice to help you with your tax [&hellip;]"
+    />
+    <meta property="og:url" content="https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/" />
+    <meta property="og:site_name" content="Tax Defense Group" />
+    <meta property="article:publisher" content="https://www.facebook.com/TheTaxDefenseGroup" />
+    <meta property="article:modified_time" content="2024-08-22T22:09:15+00:00" />
+    <meta property="og:image" content="https://www.thetaxdefensegroup.com/wp-content/uploads/2019/07/Tax-Resolution.jpg" />
+    <meta property="og:image:width" content="1440" />
+    <meta property="og:image:height" content="600" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@Tax_Defense" />
+    <meta name="twitter:label1" content="Est. reading time" />
+    <meta name="twitter:data1" content="1 minute" />
+    <script type="application/ld+json" class="yoast-schema-graph">
+        {
+            "@context": "https://schema.org",
+            "@graph": [{
+                "@type": "WebPage",
+                "@id": "https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/",
+                "url": "https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/",
+                "name": "Tax Resolution - Tax Defense Group",
+                "isPartOf": {
+                    "@id": "https://www.thetaxdefensegroup.com/#website"
+                },
+                "primaryImageOfPage": {
+                    "@id": "https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/#primaryimage"
+                },
+                "image": {
+                    "@id": "https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/#primaryimage"
+                },
+                "thumbnailUrl": "https://www.thetaxdefensegroup.com/wp-content/uploads/2019/07/Tax-Resolution.jpg",
+                "datePublished": "2019-06-11T16:54:43+00:00",
+                "dateModified": "2024-08-22T22:09:15+00:00",
+                "breadcrumb": {
+                    "@id": "https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/#breadcrumb"
+                },
+                "inLanguage": "en-US",
+                "potentialAction": [{
+                    "@type": "ReadAction",
+                    "target": ["https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/"]
+                }]
+            }, {
+                "@type": "ImageObject",
+                "inLanguage": "en-US",
+                "@id": "https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/#primaryimage",
+                "url": "https://www.thetaxdefensegroup.com/wp-content/uploads/2019/07/Tax-Resolution.jpg",
+                "contentUrl": "https://www.thetaxdefensegroup.com/wp-content/uploads/2019/07/Tax-Resolution.jpg",
+                "width": 1440,
+                "height": 600
+            }, {
+                "@type": "BreadcrumbList",
+                "@id": "https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/#breadcrumb",
+                "itemListElement": [{
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://www.thetaxdefensegroup.com/"
+                }, {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Tax Debt Relief",
+                    "item": "http://www.thetaxdefensegroup.com/tax-relief/"
+                }, {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "Tax Resolution"
+                }]
+            }, {
+                "@type": "WebSite",
+                "@id": "https://www.thetaxdefensegroup.com/#website",
+                "url": "https://www.thetaxdefensegroup.com/",
+                "name": "Tax Defense Group",
+                "description": "The Tax Defense Group provides nationwide tax resolution services for taxpayers with IRS or State tax problems. Tax Resolution Services",
+                "publisher": {
+                    "@id": "https://www.thetaxdefensegroup.com/#organization"
+                },
+                "potentialAction": [{
+                    "@type": "SearchAction",
+                    "target": {
+                        "@type": "EntryPoint",
+                        "urlTemplate": "https://www.thetaxdefensegroup.com/?s={search_term_string}"
+                    },
+                    "query-input": {
+                        "@type": "PropertyValueSpecification",
+                        "valueRequired": true,
+                        "valueName": "search_term_string"
+                    }
+                }],
+                "inLanguage": "en-US"
+            }, {
+                "@type": "Organization",
+                "@id": "https://www.thetaxdefensegroup.com/#organization",
+                "name": "THE TAX DEFENSE GROUP",
+                "url": "https://www.thetaxdefensegroup.com/",
+                "logo": {
+                    "@type": "ImageObject",
+                    "inLanguage": "en-US",
+                    "@id": "https://www.thetaxdefensegroup.com/#/schema/logo/image/",
+                    "url": "http://www.thetaxdefensegroup.com/wp-content/uploads/2019/06/The-Tax-Defense-Group-Logo.png",
+                    "contentUrl": "http://www.thetaxdefensegroup.com/wp-content/uploads/2019/06/The-Tax-Defense-Group-Logo.png",
+                    "width": 225,
+                    "height": 53,
+                    "caption": "THE TAX DEFENSE GROUP"
+                },
+                "image": {
+                    "@id": "https://www.thetaxdefensegroup.com/#/schema/logo/image/"
+                },
+                "sameAs": ["https://www.facebook.com/TheTaxDefenseGroup", "https://x.com/Tax_Defense", "https://www.linkedin.com/company/the-tax-defense-group", "https://www.youtube.com/channel/UCtYv6Y-J45gx1brWm8Y_Xbw"]
+            }]
+        }
+    </script>
+    <!-- / Yoast SEO plugin. -->
+
+
+    <link rel='dns-prefetch' href='//www.googletagmanager.com' />
+
+    <link rel="alternate" type="application/rss+xml" title="Tax Defense Group &raquo; Feed" href="https://www.thetaxdefensegroup.com/feed/" />
+    <link rel='stylesheet' id='wp-block-library-css' href='https://www.thetaxdefensegroup.com/wp-includes/css/dist/block-library/style.min.css?ver=6.7.1' media='all' />
+    <link data-minify="1" rel='stylesheet' id='automaticcss-core-css' href='https://www.thetaxdefensegroup.com/wp-content/cache/min/1/wp-content/uploads/automatic-css/automatic.css?ver=1731970641' media='all' />
+    <style id='automaticcss-core-inline-css'>
+        /* File: automatic-custom-css.css - Version: 3.0.9.1 - Generated: 2024-08-20 22:12:38 */
+    </style>
+    <link data-minify="1" rel='stylesheet' id='automaticcss-gutenberg-css' href='https://www.thetaxdefensegroup.com/wp-content/cache/min/1/wp-content/uploads/automatic-css/automatic-gutenberg.css?ver=1731970641' media='all' />
+    <link rel='stylesheet' id='awsm-ead-public-css' href='https://www.thetaxdefensegroup.com/wp-content/plugins/embed-any-document/css/embed-public.min.css?ver=2.7.7' media='all' />
+    <style id='classic-theme-styles-inline-css'>
+        /*! This file is auto-generated */
+
+        .wp-block-button__link {
+            color: #fff;
+            background-color: #32373c;
+            border-radius: 9999px;
+            box-shadow: none;
+            text-decoration: none;
+            padding: calc(.667em + 2px) calc(1.333em + 2px);
+            font-size: 1.125em
+        }
+
+        .wp-block-file__button {
+            background: #32373c;
+            color: #fff;
+            text-decoration: none
+        }
+    </style>
+    <style id='global-styles-inline-css'>
+        :root {
+            --wp--preset--aspect-ratio--square: 1;
+            --wp--preset--aspect-ratio--4-3: 4/3;
+            --wp--preset--aspect-ratio--3-4: 3/4;
+            --wp--preset--aspect-ratio--3-2: 3/2;
+            --wp--preset--aspect-ratio--2-3: 2/3;
+            --wp--preset--aspect-ratio--16-9: 16/9;
+            --wp--preset--aspect-ratio--9-16: 9/16;
+            --wp--preset--color--black: #000000;
+            --wp--preset--color--cyan-bluish-gray: #abb8c3;
+            --wp--preset--color--white: #ffffff;
+            --wp--preset--color--pale-pink: #f78da7;
+            --wp--preset--color--vivid-red: #cf2e2e;
+            --wp--preset--color--luminous-vivid-orange: #ff6900;
+            --wp--preset--color--luminous-vivid-amber: #fcb900;
+            --wp--preset--color--light-green-cyan: #7bdcb5;
+            --wp--preset--color--vivid-green-cyan: #00d084;
+            --wp--preset--color--pale-cyan-blue: #8ed1fc;
+            --wp--preset--color--vivid-cyan-blue: #0693e3;
+            --wp--preset--color--vivid-purple: #9b51e0;
+            --wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg, rgba(6, 147, 227, 1) 0%, rgb(155, 81, 224) 100%);
+            --wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg, rgb(122, 220, 180) 0%, rgb(0, 208, 130) 100%);
+            --wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg, rgba(252, 185, 0, 1) 0%, rgba(255, 105, 0, 1) 100%);
+            --wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg, rgba(255, 105, 0, 1) 0%, rgb(207, 46, 46) 100%);
+            --wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg, rgb(238, 238, 238) 0%, rgb(169, 184, 195) 100%);
+            --wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg, rgb(74, 234, 220) 0%, rgb(151, 120, 209) 20%, rgb(207, 42, 186) 40%, rgb(238, 44, 130) 60%, rgb(251, 105, 98) 80%, rgb(254, 248, 76) 100%);
+            --wp--preset--gradient--blush-light-purple: linear-gradient(135deg, rgb(255, 206, 236) 0%, rgb(152, 150, 240) 100%);
+            --wp--preset--gradient--blush-bordeaux: linear-gradient(135deg, rgb(254, 205, 165) 0%, rgb(254, 45, 45) 50%, rgb(107, 0, 62) 100%);
+            --wp--preset--gradient--luminous-dusk: linear-gradient(135deg, rgb(255, 203, 112) 0%, rgb(199, 81, 192) 50%, rgb(65, 88, 208) 100%);
+            --wp--preset--gradient--pale-ocean: linear-gradient(135deg, rgb(255, 245, 203) 0%, rgb(182, 227, 212) 50%, rgb(51, 167, 181) 100%);
+            --wp--preset--gradient--electric-grass: linear-gradient(135deg, rgb(202, 248, 128) 0%, rgb(113, 206, 126) 100%);
+            --wp--preset--gradient--midnight: linear-gradient(135deg, rgb(2, 3, 129) 0%, rgb(40, 116, 252) 100%);
+            --wp--preset--font-size--small: 13px;
+            --wp--preset--font-size--medium: 20px;
+            --wp--preset--font-size--large: 36px;
+            --wp--preset--font-size--x-large: 42px;
+            --wp--preset--spacing--20: 0.44rem;
+            --wp--preset--spacing--30: 0.67rem;
+            --wp--preset--spacing--40: 1rem;
+            --wp--preset--spacing--50: 1.5rem;
+            --wp--preset--spacing--60: 2.25rem;
+            --wp--preset--spacing--70: 3.38rem;
+            --wp--preset--spacing--80: 5.06rem;
+            --wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);
+            --wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);
+            --wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);
+            --wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);
+            --wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);
+        }
+
+        :where(.is-layout-flex) {
+            gap: 0.5em;
+        }
+
+        :where(.is-layout-grid) {
+            gap: 0.5em;
+        }
+
+        body .is-layout-flex {
+            display: flex;
+        }
+
+        .is-layout-flex {
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .is-layout-flex> :is(*, div) {
+            margin: 0;
+        }
+
+        body .is-layout-grid {
+            display: grid;
+        }
+
+        .is-layout-grid> :is(*, div) {
+            margin: 0;
+        }
+
+        :where(.wp-block-columns.is-layout-flex) {
+            gap: 2em;
+        }
+
+        :where(.wp-block-columns.is-layout-grid) {
+            gap: 2em;
+        }
+
+        :where(.wp-block-post-template.is-layout-flex) {
+            gap: 1.25em;
+        }
+
+        :where(.wp-block-post-template.is-layout-grid) {
+            gap: 1.25em;
+        }
+
+        .has-black-color {
+            color: var(--wp--preset--color--black) !important;
+        }
+
+        .has-cyan-bluish-gray-color {
+            color: var(--wp--preset--color--cyan-bluish-gray) !important;
+        }
+
+        .has-white-color {
+            color: var(--wp--preset--color--white) !important;
+        }
+
+        .has-pale-pink-color {
+            color: var(--wp--preset--color--pale-pink) !important;
+        }
+
+        .has-vivid-red-color {
+            color: var(--wp--preset--color--vivid-red) !important;
+        }
+
+        .has-luminous-vivid-orange-color {
+            color: var(--wp--preset--color--luminous-vivid-orange) !important;
+        }
+
+        .has-luminous-vivid-amber-color {
+            color: var(--wp--preset--color--luminous-vivid-amber) !important;
+        }
+
+        .has-light-green-cyan-color {
+            color: var(--wp--preset--color--light-green-cyan) !important;
+        }
+
+        .has-vivid-green-cyan-color {
+            color: var(--wp--preset--color--vivid-green-cyan) !important;
+        }
+
+        .has-pale-cyan-blue-color {
+            color: var(--wp--preset--color--pale-cyan-blue) !important;
+        }
+
+        .has-vivid-cyan-blue-color {
+            color: var(--wp--preset--color--vivid-cyan-blue) !important;
+        }
+
+        .has-vivid-purple-color {
+            color: var(--wp--preset--color--vivid-purple) !important;
+        }
+
+        .has-black-background-color {
+            background-color: var(--wp--preset--color--black) !important;
+        }
+
+        .has-cyan-bluish-gray-background-color {
+            background-color: var(--wp--preset--color--cyan-bluish-gray) !important;
+        }
+
+        .has-white-background-color {
+            background-color: var(--wp--preset--color--white) !important;
+        }
+
+        .has-pale-pink-background-color {
+            background-color: var(--wp--preset--color--pale-pink) !important;
+        }
+
+        .has-vivid-red-background-color {
+            background-color: var(--wp--preset--color--vivid-red) !important;
+        }
+
+        .has-luminous-vivid-orange-background-color {
+            background-color: var(--wp--preset--color--luminous-vivid-orange) !important;
+        }
+
+        .has-luminous-vivid-amber-background-color {
+            background-color: var(--wp--preset--color--luminous-vivid-amber) !important;
+        }
+
+        .has-light-green-cyan-background-color {
+            background-color: var(--wp--preset--color--light-green-cyan) !important;
+        }
+
+        .has-vivid-green-cyan-background-color {
+            background-color: var(--wp--preset--color--vivid-green-cyan) !important;
+        }
+
+        .has-pale-cyan-blue-background-color {
+            background-color: var(--wp--preset--color--pale-cyan-blue) !important;
+        }
+
+        .has-vivid-cyan-blue-background-color {
+            background-color: var(--wp--preset--color--vivid-cyan-blue) !important;
+        }
+
+        .has-vivid-purple-background-color {
+            background-color: var(--wp--preset--color--vivid-purple) !important;
+        }
+
+        .has-black-border-color {
+            border-color: var(--wp--preset--color--black) !important;
+        }
+
+        .has-cyan-bluish-gray-border-color {
+            border-color: var(--wp--preset--color--cyan-bluish-gray) !important;
+        }
+
+        .has-white-border-color {
+            border-color: var(--wp--preset--color--white) !important;
+        }
+
+        .has-pale-pink-border-color {
+            border-color: var(--wp--preset--color--pale-pink) !important;
+        }
+
+        .has-vivid-red-border-color {
+            border-color: var(--wp--preset--color--vivid-red) !important;
+        }
+
+        .has-luminous-vivid-orange-border-color {
+            border-color: var(--wp--preset--color--luminous-vivid-orange) !important;
+        }
+
+        .has-luminous-vivid-amber-border-color {
+            border-color: var(--wp--preset--color--luminous-vivid-amber) !important;
+        }
+
+        .has-light-green-cyan-border-color {
+            border-color: var(--wp--preset--color--light-green-cyan) !important;
+        }
+
+        .has-vivid-green-cyan-border-color {
+            border-color: var(--wp--preset--color--vivid-green-cyan) !important;
+        }
+
+        .has-pale-cyan-blue-border-color {
+            border-color: var(--wp--preset--color--pale-cyan-blue) !important;
+        }
+
+        .has-vivid-cyan-blue-border-color {
+            border-color: var(--wp--preset--color--vivid-cyan-blue) !important;
+        }
+
+        .has-vivid-purple-border-color {
+            border-color: var(--wp--preset--color--vivid-purple) !important;
+        }
+
+        .has-vivid-cyan-blue-to-vivid-purple-gradient-background {
+            background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;
+        }
+
+        .has-light-green-cyan-to-vivid-green-cyan-gradient-background {
+            background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;
+        }
+
+        .has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background {
+            background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;
+        }
+
+        .has-luminous-vivid-orange-to-vivid-red-gradient-background {
+            background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;
+        }
+
+        .has-very-light-gray-to-cyan-bluish-gray-gradient-background {
+            background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;
+        }
+
+        .has-cool-to-warm-spectrum-gradient-background {
+            background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;
+        }
+
+        .has-blush-light-purple-gradient-background {
+            background: var(--wp--preset--gradient--blush-light-purple) !important;
+        }
+
+        .has-blush-bordeaux-gradient-background {
+            background: var(--wp--preset--gradient--blush-bordeaux) !important;
+        }
+
+        .has-luminous-dusk-gradient-background {
+            background: var(--wp--preset--gradient--luminous-dusk) !important;
+        }
+
+        .has-pale-ocean-gradient-background {
+            background: var(--wp--preset--gradient--pale-ocean) !important;
+        }
+
+        .has-electric-grass-gradient-background {
+            background: var(--wp--preset--gradient--electric-grass) !important;
+        }
+
+        .has-midnight-gradient-background {
+            background: var(--wp--preset--gradient--midnight) !important;
+        }
+
+        .has-small-font-size {
+            font-size: var(--wp--preset--font-size--small) !important;
+        }
+
+        .has-medium-font-size {
+            font-size: var(--wp--preset--font-size--medium) !important;
+        }
+
+        .has-large-font-size {
+            font-size: var(--wp--preset--font-size--large) !important;
+        }
+
+        .has-x-large-font-size {
+            font-size: var(--wp--preset--font-size--x-large) !important;
+        }
+
+        :where(.wp-block-post-template.is-layout-flex) {
+            gap: 1.25em;
+        }
+
+        :where(.wp-block-post-template.is-layout-grid) {
+            gap: 1.25em;
+        }
+
+        :where(.wp-block-columns.is-layout-flex) {
+            gap: 2em;
+        }
+
+        :where(.wp-block-columns.is-layout-grid) {
+            gap: 2em;
+        }
+
+        :root :where(.wp-block-pullquote) {
+            font-size: 1.5em;
+            line-height: 1.6;
+        }
+    </style>
+    <link rel='stylesheet' id='bricks-frontend-css' href='https://www.thetaxdefensegroup.com/wp-content/themes/bricks/assets/css/frontend.min.css?ver=1730927817' media='all' />
+    <link rel='stylesheet' id='bricks-child-css' href='https://www.thetaxdefensegroup.com/wp-content/themes/bricks-child/style.css?ver=1730927816' media='all' />
+    <link rel='stylesheet' id='bricks-polylang-css' href='https://www.thetaxdefensegroup.com/wp-content/themes/bricks/assets/css/integrations/polylang.min.css?ver=1730927817' media='all' />
+    <link data-minify="1" rel='stylesheet' id='bricks-font-awesome-6-brands-css' href='https://www.thetaxdefensegroup.com/wp-content/cache/min/1/wp-content/themes/bricks/assets/css/libs/font-awesome-6-brands.min.css?ver=1731970641' media='all' />
+    <link data-minify="1" rel='stylesheet' id='bricks-themify-icons-css' href='https://www.thetaxdefensegroup.com/wp-content/cache/min/1/wp-content/themes/bricks/assets/css/libs/themify-icons.min.css?ver=1731970641' media='all' />
+    <link data-minify="1" rel='stylesheet' id='automaticcss-bricks-css' href='https://www.thetaxdefensegroup.com/wp-content/cache/min/1/wp-content/uploads/automatic-css/automatic-bricks.css?ver=1731970641' media='all' />
+    <link rel='stylesheet' id='color-scheme-switcher-frontend-css' href='https://www.thetaxdefensegroup.com/wp-content/plugins/automaticcss-plugin/classes/Features/Color_Scheme_Switcher/css/frontend.css?ver=1730927823' media='all' />
+    <style id='bricks-frontend-inline-inline-css'>
+        :root {}
+
+        .fb-header-four__contact {
+            background-color: var(--base-ultra-light)
+        }
+
+        .fb-header-four__info {
+            flex-direction: row;
+            justify-content: space-between;
+            padding-top: var(--space-xs);
+            padding-right: var(--space-s);
+            padding-bottom: var(--space-xs);
+            padding-left: var(--space-s);
+            align-items: center
+        }
+
+        .fb-header-contact-item li.has-link a,
+        .fb-header-contact-item li.no-link {
+            gap: 1rem
+        }
+
+        .fb-header-contact-item a {
+            color: var(--base-dark);
+        }
+
+        @media (max-width: 478px) {
+            .fb-header-contact-item li.has-link a,
+            .fb-header-contact-item li.no-link {
+                font-size: var(--text-s)
+            }
+        }
+
+        @media (max-width: 767px) {
+            .fb-header-item-hide-mobile {
+                display: none
+            }
+        }
+
+        .fb-header-social-icons li {
+            transition: all .3s
+        }
+
+        .fb-header-social-icons {
+            gap: 2.5rem
+        }
+
+        .fb-header-social-icons li:hover {
+            transform: scale(1.2);
+        }
+
+        .fb-header-social-icons a {
+            color: var(--base-dark);
+        }
+
+        @media (max-width: 767px) {
+            .fb-header-social-icons {
+                gap: 20px
+            }
+        }
+
+        @media (max-width: 478px) {
+            .fb-header-social-icons li.has-link a,
+            .fb-header-social-icons li.no-link {
+                font-size: 14px
+            }
+        }
+
+        .fb-header-four__main {
+            border-bottom: 1px solid #ebebeb
+        }
+
+        .fb-header-four__wrapper {
+            padding-top: var(--space-xs);
+            padding-right: var(--space-s);
+            padding-bottom: var(--space-xs);
+            padding-left: var(--space-s);
+            flex-direction: row;
+            align-items: center;
+            column-gap: 2rem
+        }
+
+        .fb-header-four__logo .bricks-site-logo {
+            width: 180px
+        }
+
+        .fb-header-four__logo {
+            margin-right: auto
+        }
+
+        @media (max-width: 478px) {
+            .fb-header-four__logo .bricks-site-logo {
+                width: 140px
+            }
+        }
+
+        .fb-menu .bricks-nav-menu>li>a {
+            font-size: 1.8rem;
+            line-height: 1.7em;
+            color: var(--base-ultra-dark)
+        }
+
+        .fb-menu .bricks-nav-menu>li>.brx-submenu-toggle>* {
+            font-size: 1.8rem;
+            line-height: 1.7em;
+            color: var(--base-ultra-dark)
+        }
+
+        .fb-menu .bricks-nav-menu>li.menu-item-has-children>.brx-submenu-toggle button[aria-expanded] {
+            font-size: 12px
+        }
+
+        .fb-menu .bricks-nav-menu .brx-submenu-toggle button {
+            margin-left: 5px
+        }
+
+        .fb-menu .bricks-nav-menu .sub-menu {
+            background-color: var(--white);
+            border-radius: var(--radius-m);
+            box-shadow: 0 20px 30px 0 var(--base-dark-trans-20)
+        }
+
+        .fb-menu .bricks-nav-menu .sub-menu>li>a {
+            font-size: 1.6rem;
+            line-height: 1;
+            color: var(--base-dark)
+        }
+
+        .fb-menu .bricks-nav-menu .sub-menu>li>.brx-submenu-toggle>* {
+            font-size: 1.6rem;
+            line-height: 1;
+            color: var(--base-dark)
+        }
+
+        .fb-menu .bricks-nav-menu>li {
+            margin-right: var(--space-xs);
+            margin-left: var(--space-xs)
+        }
+
+        .fb-menu .bricks-nav-menu li {
+            transition: all .3s
+        }
+
+        .fb-menu .bricks-nav-menu li a {
+            transition: all .3s
+        }
+
+        .fb-menu .bricks-mobile-menu li a {
+            transition: all .3s
+        }
+
+        .fb-menu .bricks-mobile-menu-wrapper:before {
+            background-color: var(--white)
+        }
+
+        .fb-menu .bricks-mobile-menu>li>a {
+            color: #212224;
+            font-size: 20px
+        }
+
+        .fb-menu .bricks-mobile-menu>li>.brx-submenu-toggle>* {
+            color: #212224;
+            font-size: 20px
+        }
+
+        .fb-menu .bricks-mobile-menu .sub-menu>li>a {
+            color: #212224;
+            font-size: 18px
+        }
+
+        .fb-menu .bricks-mobile-menu .sub-menu>li>.brx-submenu-toggle>* {
+            color: #212224;
+            font-size: 18px
+        }
+
+        .fb-menu .bricks-nav-menu .sub-menu a {
+            padding-top: 15px;
+            padding-right: 15px;
+            padding-bottom: 15px;
+            padding-left: 15px
+        }
+
+        .fb-menu .bricks-nav-menu .sub-menu button {
+            padding-top: 15px;
+            padding-right: 15px;
+            padding-bottom: 15px;
+            padding-left: 15px
+        }
+
+        .fb-menu .bricks-mobile-menu-wrapper .sub-menu {
+            padding: 0;
+            background: var(--base-ultra-light) !important;
+        }
+
+        .fb-menu li.menu-item-has-children [aria-expanded=true] .open {
+            display: block;
+        }
+
+        .fb-menu:not(.fb-menu--center) .bricks-nav-menu {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1em 0;
+        }
+
+        @media (max-width: 767px) {
+            .fb-menu .bricks-mobile-menu-toggle {
+                display: flex !important;
+            }
+            .fb-menu {
+                order: 1
+            }
+        }
+
+        .fb-menu--line-anim .bricks-nav-menu>li:hover>a {
+            color: var(--primary)
+        }
+
+        .fb-menu--line-anim .bricks-nav-menu>li:hover>.brx-submenu-toggle>* {
+            color: var(--primary)
+        }
+
+        .fb-menu--line-anim .bricks-nav-menu>li>a {
+            position: relative;
+        }
+
+        .fb-menu--line-anim .bricks-nav-menu>li>a:before,
+        .fb-menu--line-anim .bricks-nav-menu .brx-submenu-toggle:before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 15px;
+            height: 2px;
+            background: var(--primary);
+            z-index: -1;
+            border-radius: 5px;
+            transition: all .3s;
+            opacity: .5;
+        }
+
+        .fb-menu--line-anim .bricks-nav-menu>li>a:hover:before,
+        .fb-menu--line-anim .bricks-nav-menu .current-menu-item>a:before,
+        .fb-menu--line-anim .bricks-nav-menu .brx-submenu-toggle:hover:before {
+            width: 100%;
+            opacity: 1;
+        }
+
+        .fb-menu--submenu-line-anim .bricks-nav-menu .sub-menu>li:hover>a {
+            color: var(--primary)
+        }
+
+        .fb-menu--submenu-line-anim .bricks-nav-menu .sub-menu>li:hover>.brx-submenu-toggle>* {
+            color: var(--primary)
+        }
+
+        .fb-menu--submenu-line-anim .bricks-nav-menu .sub-menu a:before {
+            content: "";
+            position: absolute;
+            bottom: 10px;
+            left: 15px;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            z-index: -1;
+            border-radius: 5px;
+            transition: all .3s;
+            opacity: .5;
+        }
+
+        .fb-menu--submenu-line-anim .bricks-nav-menu .sub-menu a:hover:before {
+            width: 30px;
+            opacity: 1;
+        }
+
+        .fb-menu--mobile-under-04 .bricks-mobile-menu-wrapper {
+            width: 100% !important;
+            top: 118px !important;
+        }
+
+        .fb-menu--mobile-under-04 .bricks-mobile-menu-overlay {
+            display: none !important;
+        }
+
+        .fb-btn-reveal {
+            transition: all .3s;
+            gap: 0px;
+            font-size: var(--text-l);
+            line-height: 1em;
+            padding-top: 0.7em;
+            padding-right: 1.5em;
+            padding-bottom: 0.7em;
+            padding-left: 1.5em;
+            border-radius: var(--radius-m)
+        }
+
+        .fb-btn-reveal:hover {
+            background-color: #212224;
+            color: #ffffff;
+            box-shadow: 5px 5px 0 0 var(--base-light-trans-40)
+        }
+
+        .fb-btn-reveal i {
+            font-size: var(--text-m)
+        }
+
+        .fb-btn-reveal i {
+            transition: all .3s;
+            opacity: 0;
+            margin-left: -1em;
+            line-height: 0;
+        }
+
+        .fb-btn-reveal:hover i {
+            opacity: 1;
+            margin-left: 5px;
+            margin-right: -5px;
+        }
+
+        .fb-btn-reveal--small {
+            font-size: var(--text-m);
+            padding-top: .6em;
+            padding-right: 1.2em;
+            padding-bottom: .6em;
+            padding-left: 1.2em
+        }
+
+        @media (max-width: 478px) {
+            .fb-btn-reveal--small {
+                font-size: 14px
+            }
+        }
+
+        .fb-btn-reveal--primary {
+            background-color: var(--primary);
+            color: var(--white)
+        }
+
+        .fb-btn-reveal--primary:hover {
+            background-color: var(--secondary);
+            box-shadow: 5px 5px 0 0 var(--secondary-trans-30)
+        }
+
+        .fb-container {
+            column-gap: 2rem
+        }
+
+        .fb-heading-three {
+            row-gap: .5rem
+        }
+
+        .fb-heading-three--center {
+            text-align: center;
+            align-items: center
+        }
+
+        .fb-heading-three--center .fb-heading-three__box {
+            justify-content: center;
+            flex-direction: column-reverse;
+        }
+
+        .fb-heading-three--center .fb-heading-three__divider {
+            width: 5rem;
+        }
+
+        .fb-heading-three--white .fb-heading-three__subheading,
+        .fb-heading-three--white .fb-heading-three__heading {
+            color: var(--white);
+        }
+
+        .fb-heading-three__heading {
+            line-height: 1.2em;
+            font-size: var(--text-xl)
+        }
+
+        .footer-cta {
+            padding-top: var(--space-xl);
+            padding-right: var(--space-xl);
+            padding-left: var(--space-xl);
+            margin-bottom: calc(var(--section-space-xs) * -1)
+        }
+
+        .footer-cta-container {
+            display: grid;
+            align-items: initial;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            align-items: stretch;
+            z-index: 99;
+            position: relative;
+            border: 1px solid var(--black-trans-10)
+        }
+
+        @media (max-width: 767px) {
+            .footer-cta-container {
+                grid-template-columns: repeat(1, minmax(0, 1fr))
+            }
+        }
+
+        .footer-cta__content {
+            row-gap: var(--content-gap);
+            flex-wrap: nowrap;
+            padding-top: var(--space-m);
+            padding-right: var(--space-xl);
+            padding-bottom: var(--space-m);
+            padding-left: var(--space-xl);
+            justify-content: center;
+            background-color: var(--white)
+        }
+
+        .footer-cta__media {
+            order: -1
+        }
+
+        .footer-cta__image:not(.tag),
+        .footer-cta__image img {
+            object-fit: cover
+        }
+
+        .footer-cta__image {
+            aspect-ratio: 6/4;
+            height: 100%;
+            width: 100%
+        }
+
+        .footer-14 {
+            row-gap: var(--container-gap);
+            background-color: var(--neutral-ultra-light)
+        }
+
+        .footer-14-bottom-container {
+            display: grid;
+            align-items: initial;
+            grid-template-columns: var(--grid-2);
+            grid-gap: var(--grid-gap)
+        }
+
+        @media (max-width: 767px) {
+            .footer-14-bottom-container {
+                grid-template-columns: var(--grid-1)
+            }
+        }
+
+        .footer-bottom__left {
+            flex-direction: row;
+            row-gap: var(--space-xs);
+            column-gap: var(--space-xs);
+            align-items: center
+        }
+
+        @media (max-width: 478px) {
+            .footer-bottom__left {
+                flex-direction: column;
+                align-items: flex-start
+            }
+        }
+
+        .footer-copyright {
+            font-size: var(--text-s)
+        }
+
+        .footer-legal-nav {
+            flex-direction: row;
+            column-gap: var(--content-gap)
+        }
+
+        .footer-legal__li {
+            display: flex;
+            justify-content: center
+        }
+
+        .footer-legal__link-text {
+            font-size: var(--text-s)
+        }
+
+        a[role="button"] {
+            margin-top: 20px;
+            display: inline-block;
+            width: auto;
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+        }
+
+        :root {
+            --bricks-color-acss_import_transparent: transparent;
+        }
+
+        #brxe-syetqn .repeater-item:nth-child(1).has-link a {
+            color: var(--base-dark)
+        }
+
+        #brxe-syetqn .repeater-item:nth-child(1).no-link {
+            color: var(--base-dark)
+        }
+
+        #brxe-syetqn .repeater-item:nth-child(2).has-link a {
+            color: var(--base-dark)
+        }
+
+        #brxe-syetqn .repeater-item:nth-child(2).no-link {
+            color: var(--base-dark)
+        }
+
+        #brxe-syetqn .repeater-item:nth-child(3).has-link a {
+            color: var(--base-dark)
+        }
+
+        #brxe-syetqn .repeater-item:nth-child(3).no-link {
+            color: var(--base-dark)
+        }
+
+        #brxe-syetqn .repeater-item:nth-child(4).has-link a {
+            color: var(--base-dark)
+        }
+
+        #brxe-syetqn .repeater-item:nth-child(4).no-link {
+            color: var(--base-dark)
+        }
+
+        @media (max-width: 767px) {
+            #brxe-588109 .bricks-nav-menu-wrapper {
+                display: none;
+            }
+            #brxe-588109 .bricks-mobile-menu-toggle {
+                display: block;
+            }
+        }
+
+        #brxe-quibxh .item[aria-current="page"] {
+            color: var(--action-light)
+        }
+
+        #brxe-quibxh .separator {
+            color: var(--info-light)
+        }
+
+        #brxe-kikxzb {
+            flex-direction: row;
+            row-gap: 6rem
+        }
+
+        #brxe-fmoshy {
+            background-image: url(https://www.thetaxdefensegroup.com/wp-content/uploads/2019/06/inner-banner.jpg);
+            background-size: cover;
+            padding-top: var(--section-space-s);
+            padding-bottom: var(--section-space-s)
+        }
+
+        @media (max-width: 767px) {
+            #brxe-fdrvmw .bricks-nav-menu-wrapper {
+                display: none;
+            }
+            #brxe-fdrvmw .bricks-mobile-menu-toggle {
+                display: block;
+            }
+        }
+
+        #brxe-fdrvmw .bricks-nav-menu {
+            flex-direction: column
+        }
+
+        #brxe-fdrvmw .bricks-nav-menu>li {
+            margin-bottom: 15px;
+            margin-left: 0
+        }
+
+        #brxe-fdrvmw .bricks-nav-menu>li>a {
+            color: var(--info-ultra-dark);
+            font-weight: 700;
+            padding-bottom: 10px
+        }
+
+        #brxe-fdrvmw .bricks-nav-menu>li>.brx-submenu-toggle>* {
+            color: var(--info-ultra-dark);
+            font-weight: 700;
+            padding-bottom: 10px
+        }
+
+        #brxe-fdrvmw .bricks-nav-menu .sub-menu {
+            background-color: rgba(0, 0, 0, 0)
+        }
+
+        #brxe-fdrvmw .bricks-nav-menu .sub-menu>li>a {
+            color: var(--primary);
+            font-size: var(--text-m)
+        }
+
+        #brxe-fdrvmw .bricks-nav-menu .sub-menu>li>.brx-submenu-toggle>* {
+            color: var(--primary);
+            font-size: var(--text-m)
+        }
+
+        #brxe-fdrvmw .bricks-nav-menu .sub-menu a {
+            padding-bottom: 5px
+        }
+
+        #brxe-fdrvmw .bricks-nav-menu .sub-menu button {
+            padding-bottom: 5px
+        }
+
+        #brxe-fdrvmw {
+            padding-top: var(--space-xs);
+            padding-bottom: var(--space-xs)
+        }
+
+        #brxe-fdrvmw .sub-menu {
+            display: revert;
+            opacity: revert;
+            position: revert;
+            visibility: revert;
+        }
+
+        #brxe-fdrvmw button {
+            display: none;
+        }
+
+        #brxe-gwkmty {
+            width: 33%
+        }
+
+        #brxe-qcrssy {
+            width: 67%
+        }
+
+        @media (max-width: 767px) {
+            #brxe-qcrssy {
+                width: 100%
+            }
+        }
+
+        #brxe-xganqu {
+            flex-direction: row
+        }
+
+        #brxe-d3a2a9 {
+            overflow: hidden
+        }
+
+        #brxe-84059a {
+            padding-top: 0;
+            padding-right: 0;
+            padding-bottom: 0;
+            padding-left: 0
+        }
+
+        #brxe-f2c3c2 .bricks-site-logo {
+            width: 100%
+        }
+
+        #brxe-3deb00 {
+            justify-content: flex-end
+        }
+
+        @media (max-width: 767px) {
+            #brxe-3deb00 {
+                justify-content: flex-start
+            }
+        }
+
+        #brxe-72b0cc {
+            display: flex
+        }
+    </style>
+    <style id='rocket-lazyload-inline-css'>
+        .rll-youtube-player {
+            position: relative;
+            padding-bottom: 56.23%;
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+        }
+
+        .rll-youtube-player:focus-within {
+            outline: 2px solid currentColor;
+            outline-offset: 5px;
+        }
+
+        .rll-youtube-player iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+            background: 0 0
+        }
+
+        .rll-youtube-player img {
+            bottom: 0;
+            display: block;
+            left: 0;
+            margin: auto;
+            max-width: 100%;
+            width: 100%;
+            position: absolute;
+            right: 0;
+            top: 0;
+            border: none;
+            height: auto;
+            -webkit-transition: .4s all;
+            -moz-transition: .4s all;
+            transition: .4s all
+        }
+
+        .rll-youtube-player img:hover {
+            -webkit-filter: brightness(75%)
+        }
+
+        .rll-youtube-player .play {
+            height: 100%;
+            width: 100%;
+            left: 0;
+            top: 0;
+            position: absolute;
+            background: url(https://www.thetaxdefensegroup.com/wp-content/plugins/wp-rocket/assets/img/youtube.png) no-repeat center;
+            background-color: transparent !important;
+            cursor: pointer;
+            border: none;
+        }
+    </style>
+    <script type="rocketlazyloadscript" data-rocket-src="https://www.thetaxdefensegroup.com/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js"></script>
+    <script type="rocketlazyloadscript" data-rocket-src="https://www.thetaxdefensegroup.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js" data-rocket-defer defer></script>
+    <script id="color-scheme-switcher-frontend-js-extra">
+        var acss = {
+            "color_mode": "light",
+            "enable_client_color_preference": "true"
+        };
+    </script>
+    <script type="rocketlazyloadscript" data-rocket-src="https://www.thetaxdefensegroup.com/wp-content/plugins/automaticcss-plugin/classes/Features/Color_Scheme_Switcher/js/frontend.min.js?ver=1730927823" id="color-scheme-switcher-frontend-js" data-rocket-defer
+        defer></script>
+    <link rel="https://api.w.org/" href="https://www.thetaxdefensegroup.com/wp-json/" />
+    <link rel="alternate" title="JSON" type="application/json" href="https://www.thetaxdefensegroup.com/wp-json/wp/v2/pages/15250" />
+    <link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.thetaxdefensegroup.com/xmlrpc.php?rsd" />
+    <link rel='shortlink' href='https://www.thetaxdefensegroup.com/?p=15250' />
+    <link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="https://www.thetaxdefensegroup.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.thetaxdefensegroup.com%2Ftax-relief%2Ftax-resolution%2F" />
+    <link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="https://www.thetaxdefensegroup.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.thetaxdefensegroup.com%2Ftax-relief%2Ftax-resolution%2F&#038;format=xml" />
+    <meta name="generator" content="Site Kit by Google 1.155.0" />
+    <link rel="icon" href="https://www.thetaxdefensegroup.com/wp-content/uploads/2019/06/tdg-fav.png" sizes="32x32" />
+    <link rel="icon" href="https://www.thetaxdefensegroup.com/wp-content/uploads/2019/06/tdg-fav.png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="https://www.thetaxdefensegroup.com/wp-content/uploads/2019/06/tdg-fav.png" />
+    <meta name="msapplication-TileImage" content="https://www.thetaxdefensegroup.com/wp-content/uploads/2019/06/tdg-fav.png" />
+    <noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript>
+    <meta name="generator" content="WP Rocket 3.19.0.1" data-wpr-features="wpr_delay_js wpr_defer_js wpr_minify_js wpr_lazyload_images wpr_lazyload_iframes wpr_minify_css wpr_mobile"
+    />
+</head>
+
+<body class="page-template-default page page-id-15250 page-parent page-child parent-pageid-35 brx-body bricks-is-frontend wp-embed-responsive"> <a class="skip-link" href="#brx-content">Skip to main content</a>
+
+    <a class="skip-link" href="#brx-footer">Skip to footer</a>
+    <header data-rocket-location-hash="5eea61c08c7b659c16ba6025e9164c07" id="brx-header">
+        <div data-rocket-location-hash="4ee3d7e9b914b0b5eff804022b1f88a1" class="brxe-section fb-header-four__contact bricks-lazy-hidden">
+            <div data-rocket-location-hash="a18733cdb3291bf569f351da361694f7" class="brxe-container fb-header-four__info bricks-lazy-hidden">
+                <ul class="brxe-social-icons fb-header-contact-item fb-header-item-hide-mobile">
+                    <li class="repeater-item has-link"><a href="/cdn-cgi/l/email-protection#f69f989099b6829e9382978e929390939885939184998386d895999b" target="_blank"><i class="icon ti-email"></i><span><span class="__cf_email__" data-cfemail="3a53545c557a4e525f4e5b425e5f5c5f54495f5d48554f4a14595557">[email&#160;protected]</span></span></a></li>
+                </ul>
+                <ul class="brxe-social-icons fb-header-contact-item">
+                    <li class="repeater-item has-link"><a href="tel:888-373-9385" target="_blank"><i class="icon ti-headphone-alt"></i><span>888-373-9385</span></a></li>
+                </ul>
+                <ul id="brxe-syetqn" class="brxe-social-icons fb-header-social-icons">
+                    <li class="repeater-item has-link"><a href="https://x.com/i/flow/login?redirect_after_login=%2FTax_Defense"><i class="icon fab fa-x-twitter"></i></a></li>
+                    <li class="repeater-item has-link"><a href="https://www.facebook.com/TheTaxDefenseGroup"><i class="icon fab fa-facebook-f"></i></a></li>
+                    <li class="repeater-item has-link"><a href="https://www.youtube.com/channel/UCtYv6Y-J45gx1brWm8Y_Xbw"><i class="icon fab fa-youtube"></i></a></li>
+                    <li class="repeater-item has-link"><a href="https://www.linkedin.com/company/the-tax-defense-group/"><i class="icon fab fa-linkedin-in"></i></a></li>
+                </ul>
+                <ul class="brxe-polylang-language-switcher">
+                    <li class="lang-item lang-item-25 lang-item-es_lang no-translation lang-item-first"><a lang="es-MX" hreflang="es-MX" href="https://www.thetaxdefensegroup.com/home-spanish/"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2016%2011'%3E%3C/svg%3E" alt="Español" width="16" height="11" style="width: 16px; height: 11px;" data-lazy-src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAALCAMAAABBPP0LAAAAflBMVEUAXgnp6ejj49zOAADGAACBvZl+u5Z2t4/9/f36+vrnZ2tmrYNdqXv29vbjR03fQkjjWFy4AABVpHba0LzfOD5PoXHg1sXHsIyDXjzSxq8AUQCrtaONfWn08fHbLTPgTVBInWudrZk7lmHYIymvAAAAQwAANwAAJQDU1NTKxMQZpDQjAAAAaklEQVR4ATXItUEEUAAFsLxvuDc4+2+Fu0ODnFSXMgGBRIguWQS/0YdMZqJFkiIyWFttkk4jqs1kfHcohzG059YetlndUhh1zYF+ZnUVhbpW3A4X6O97be1jDevP1nRoPGUAz9ByFAJZgjmA3Q34KhcIQAAAAABJRU5ErkJggg==" /><noscript><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAALCAMAAABBPP0LAAAAflBMVEUAXgnp6ejj49zOAADGAACBvZl+u5Z2t4/9/f36+vrnZ2tmrYNdqXv29vbjR03fQkjjWFy4AABVpHba0LzfOD5PoXHg1sXHsIyDXjzSxq8AUQCrtaONfWn08fHbLTPgTVBInWudrZk7lmHYIymvAAAAQwAANwAAJQDU1NTKxMQZpDQjAAAAaklEQVR4ATXItUEEUAAFsLxvuDc4+2+Fu0ODnFSXMgGBRIguWQS/0YdMZqJFkiIyWFttkk4jqs1kfHcohzG059YetlndUhh1zYF+ZnUVhbpW3A4X6O97be1jDevP1nRoPGUAz9ByFAJZgjmA3Q34KhcIQAAAAABJRU5ErkJggg==" alt="Español" width="16" height="11" style="width: 16px; height: 11px;" /></noscript></a></li>
+                    <li class="lang-item lang-item-28 lang-item-en current-lang"><a lang="en-US" hreflang="en-US" href="https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/" aria-current="true"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2016%2011'%3E%3C/svg%3E" alt="English" width="16" height="11" style="width: 16px; height: 11px;" data-lazy-src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAALCAMAAABBPP0LAAAAmVBMVEViZsViZMJiYrf9gnL8eWrlYkjgYkjZYkj8/PujwPybvPz4+PetraBEgfo+fvo3efkydfkqcvj8Y2T8UlL8Q0P8MzP9k4Hz8/Lu7u4DdPj9/VrKysI9fPoDc/EAZ7z7IiLHYkjp6ekCcOTk5OIASbfY/v21takAJrT5Dg6sYkjc3Nn94t2RkYD+y8KeYkjs/v7l5fz0dF22YkjWvcOLAAAAgElEQVR4AR2KNULFQBgGZ5J13KGGKvc/Cw1uPe62eb9+Jr1EUBFHSgxxjP2Eca6AfUSfVlUfBvm1Ui1bqafctqMndNkXpb01h5TLx4b6TIXgwOCHfjv+/Pz+5vPRw7txGWT2h6yO0/GaYltIp5PT1dEpLNPL/SdWjYjAAZtvRPgHJX4Xio+DSrkAAAAASUVORK5CYII=" /><noscript><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAALCAMAAABBPP0LAAAAmVBMVEViZsViZMJiYrf9gnL8eWrlYkjgYkjZYkj8/PujwPybvPz4+PetraBEgfo+fvo3efkydfkqcvj8Y2T8UlL8Q0P8MzP9k4Hz8/Lu7u4DdPj9/VrKysI9fPoDc/EAZ7z7IiLHYkjp6ekCcOTk5OIASbfY/v21takAJrT5Dg6sYkjc3Nn94t2RkYD+y8KeYkjs/v7l5fz0dF22YkjWvcOLAAAAgElEQVR4AR2KNULFQBgGZ5J13KGGKvc/Cw1uPe62eb9+Jr1EUBFHSgxxjP2Eca6AfUSfVlUfBvm1Ui1bqafctqMndNkXpb01h5TLx4b6TIXgwOCHfjv+/Pz+5vPRw7txGWT2h6yO0/GaYltIp5PT1dEpLNPL/SdWjYjAAZtvRPgHJX4Xio+DSrkAAAAASUVORK5CYII=" alt="English" width="16" height="11" style="width: 16px; height: 11px;" /></noscript></a></li>
+                </ul>
+            </div>
+        </div>
+        <div data-rocket-location-hash="e4b0c6907a7064e2e9b9c39c4b94fe16" class="brxe-section fb-header-four__main bricks-lazy-hidden">
+            <div data-rocket-location-hash="3368615f964ec5317ed21486f915016e" class="brxe-container fb-header-four__wrapper bricks-lazy-hidden"><a class="brxe-logo fb-header-four__logo" href="https://www.thetaxdefensegroup.com"><img width="363" height="83" src="https://www.thetaxdefensegroup.com/wp-content/uploads/2021/01/DK-4150.png" class="bricks-site-logo css-filter" alt="the Tax Defense Group" loading="eager" decoding="async" /></a>
+                <div
+                    id="brxe-588109" data-script-id="588109" class="brxe-nav-menu fb-menu fb-menu--line-anim fb-menu--submenu-line-anim fb-menu--mobile-under-04">
+                    <nav class="bricks-nav-menu-wrapper mobile_landscape">
+                        <ul id="menu-primary" class="bricks-nav-menu">
+                            <li id="menu-item-16256" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children menu-item-16256 bricks-menu-item">
+                                <div class="brx-submenu-toggle icon-right"><a>Services</a><button aria-expanded="false" aria-label="Services Sub menu"><i class="menu-item-icon ti-angle-down"></i></button></div>
+                                <ul class="sub-menu">
+                                    <li id="menu-item-17595" class="menu-item menu-item-type-post_type menu-item-object-page current-page-ancestor current-page-parent menu-item-17595 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/">Tax Relief</a></li>
+                                    <li id="menu-item-17596" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-15250 current_page_item menu-item-17596 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/" aria-current="page">Tax Resolution</a></li>
+                                    <li id="menu-item-16237" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16237 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-preparation/">Tax Preparation</a></li>
+                                    <li id="menu-item-17597" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17597 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-negotiation/">Tax Negotiation</a></li>
+                                    <li id="menu-item-18056" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18056 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/sba-loan-default/">SBA Loan Default</a></li>
+                                    <li id="menu-item-18075" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18075 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief-copy/">Bookkeeping Services</a></li>
+                                </ul>
+                            </li>
+                            <li id="menu-item-48" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-48 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/review/">Reviews</a></li>
+                            <li id="menu-item-46" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-46 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/faq/">FAQ</a></li>
+                            <li id="menu-item-45" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-45 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/contact-us/">Contact</a></li>
+                            <li id="menu-item-16851" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16851 bricks-menu-item"><a href="/job/">Careers</a></li>
+                        </ul>
+                    </nav> <button class="bricks-mobile-menu-toggle" aria-haspopup="true" aria-label="Open mobile menu" aria-expanded="false">
+				<span class="bar-top"></span>
+				<span class="bar-center"></span>
+				<span class="bar-bottom"></span>
+			</button>
+                    <nav class="bricks-mobile-menu-wrapper left">
+                        <ul id="menu-primary-1" class="bricks-mobile-menu">
+                            <li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children menu-item-16256 bricks-menu-item">
+                                <div class="brx-submenu-toggle icon-right"><a>Services</a><button aria-expanded="false" aria-label="Services Sub menu"><i class="open ti-angle-down"></i></button></div>
+                                <ul class="sub-menu">
+                                    <li class="menu-item menu-item-type-post_type menu-item-object-page current-page-ancestor current-page-parent menu-item-17595 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/">Tax Relief</a></li>
+                                    <li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-15250 current_page_item menu-item-17596 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/" aria-current="page">Tax Resolution</a></li>
+                                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16237 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-preparation/">Tax Preparation</a></li>
+                                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17597 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-negotiation/">Tax Negotiation</a></li>
+                                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18056 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/sba-loan-default/">SBA Loan Default</a></li>
+                                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18075 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief-copy/">Bookkeeping Services</a></li>
+                                </ul>
+                            </li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-48 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/review/">Reviews</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-46 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/faq/">FAQ</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-45 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/contact-us/">Contact</a></li>
+                            <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16851 bricks-menu-item"><a href="/job/">Careers</a></li>
+                        </ul>
+                    </nav>
+                    <div class="bricks-mobile-menu-overlay"></div>
+            </div><a class="brxe-button fb-btn-reveal fb-btn-reveal--small fb-header-four__btn fb-btn-reveal--primary bricks-button" href="tel:888-373-9385">888-373-9385<i class="ti-angle-right"></i></a></div>
+        <div data-rocket-location-hash="d6b01c81d957fe6fd5f7a59660bbfe22"
+            data-script-id="07147d" class="brxe-code">
+            <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+            <script type="rocketlazyloadscript">
+                // Código JavaScript document.addEventListener('DOMContentLoaded', function () { // Obtenemos el elemento con la clase "fb-menu" const fbMenu = document.querySelector('.fb-menu'); // Agregamos un evento de clic al elemento con la clase "bricks-mobile-menu-wrapper"
+                document.querySelector('.bricks-mobile-menu-wrapper').addEventListener('click', function (event) { // Verificamos si el elemento clickeado es un enlace (etiqueta "a") if (event.target.tagName === 'A') { // Removemos la clase "show-mobile-menu"
+                del elemento con la clase "fb-menu" fbMenu.classList.remove('show-mobile-menu'); } }); });
+
+            </script>
+        </div>
+        </div>
+    </header>
+    <main data-rocket-location-hash="48cff20cc0bf1510a8667e63a4f1c0fa" id="brx-content">
+        <section data-rocket-location-hash="b5839cb52ba372f6657e0f3bb8134717" id="brxe-fmoshy" class="brxe-section bg--primary-semi-dark bricks-lazy-hidden">
+            <div data-rocket-location-hash="21d6deeb00dc7eee702fd8e37741087a" id="brxe-kikxzb" class="brxe-container fb-container bricks-lazy-hidden">
+                <div class="brxe-block bricks-lazy-hidden">
+                    <div class="brxe-block fb-heading-three fb-heading-three--center fb-heading-three--white bricks-lazy-hidden">
+                        <h1 class="brxe-heading fb-heading-three__heading">Tax Resolution</h1>
+                        <nav id="brxe-quibxh" class="brxe-breadcrumbs marker--action-ultra-light link-hover--action-ultra-light link--action-light text--s" aria-label="Breadcrumb"><a class="item" href="https://www.thetaxdefensegroup.com">Home</a><span class="separator">|</span><a class="item" href="https://www.thetaxdefensegroup.com/tax-relief/">Tax Debt Relief</a><span class="separator">|</span><span class="item"
+                                aria-current="page">Tax Resolution</span></nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section data-rocket-location-hash="95c522669a5a01e67ff2babb45bd0778" class="brxe-section bricks-lazy-hidden">
+            <div data-rocket-location-hash="674833f994655b645719762832c9b528" id="brxe-xganqu" class="brxe-container bricks-lazy-hidden">
+                <div id="brxe-gwkmty" class="brxe-block bg--ultra-light padding--xs display--m-none bricks-lazy-hidden">
+                    <div id="brxe-fdrvmw" data-script-id="fdrvmw" class="brxe-nav-menu padding--none">
+                        <nav class="bricks-nav-menu-wrapper mobile_landscape">
+                            <ul id="menu-services-menu" class="bricks-nav-menu">
+                                <li id="menu-item-17516" class="menu-item menu-item-type-post_type menu-item-object-page current-page-ancestor current-page-parent menu-item-17516 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/">Tax Relief</a></li>
+                                <li id="menu-item-17511" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-15250 current_page_item menu-item-has-children menu-item-17511 bricks-menu-item">
+                                    <div class="brx-submenu-toggle icon-right"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/" aria-current="page">Tax Resolution</a><button aria-expanded="false" aria-label="Tax Resolution Sub menu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" fill="none" class="menu-item-icon"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button></div>
+                                    <ul class="sub-menu">
+                                        <li id="menu-item-17517" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17517 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/audit-representation/">Audit Representation</a></li>
+                                        <li id="menu-item-17553" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17553 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/innocent-spouse-relief/">Innocent Spouse Relief</a></li>
+                                        <li id="menu-item-17554" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17554 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/payroll-tax-relief/">Payroll Tax Relief</a></li>
+                                        <li id="menu-item-17519" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-17519 bricks-menu-item">
+                                            <div class="brx-submenu-toggle icon-right"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/lien-filing/">Lien Filing</a><button aria-expanded="false" aria-label="Lien Filing Sub menu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" fill="none" class="menu-item-icon"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button></div>
+                                            <ul class="sub-menu">
+                                                <li id="menu-item-17548" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17548 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/appeal-the-linen/">Appeal the Lien</a></li>
+                                                <li id="menu-item-17549" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17549 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/lien-release/">Lien Release</a></li>
+                                                <li id="menu-item-17550" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17550 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/lien-subordination/">Lien Subordination</a></li>
+                                                <li id="menu-item-17552" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17552 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/removing-lien-from-credit/">Removing Lien From Credit</a></li>
+                                                <li id="menu-item-17551" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17551 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/avoiding-tax-liens/">Avoiding Tax Liens</a></li>
+                                            </ul>
+                                        </li>
+                                        <li id="menu-item-17522" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-17522 bricks-menu-item">
+                                            <div class="brx-submenu-toggle icon-right"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/pension-levy/">Pension Levy</a><button aria-expanded="false" aria-label="Pension Levy Sub menu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" fill="none" class="menu-item-icon"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button></div>
+                                            <ul class="sub-menu">
+                                                <li id="menu-item-17525" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17525 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/state-wage-garnishment/">Wage Garnishment</a></li>
+                                                <li id="menu-item-17523" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17523 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/social-security-levy/">Social Security Levy</a></li>
+                                                <li id="menu-item-17515" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17515 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/irs-bank-levy/">IRS Bank Levy</a></li>
+                                                <li id="menu-item-17520" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17520 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/state-bank-levy/">State Bank Levy</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li id="menu-item-17509" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-17509 bricks-menu-item">
+                                    <div class="brx-submenu-toggle icon-right"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-negotiation/">Tax Negotiation</a><button aria-expanded="false" aria-label="Tax Negotiation Sub menu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" fill="none" class="menu-item-icon"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button></div>
+                                    <ul class="sub-menu">
+                                        <li id="menu-item-17513" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17513 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/currently-not-collectible/">Currently Not Collectible</a></li>
+                                        <li id="menu-item-17526" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17526 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/irs-installment-plans/">IRS Installment Plans</a></li>
+                                        <li id="menu-item-17510" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17510 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/offer-in-compormise/">Offer in Compromise</a></li>
+                                        <li id="menu-item-17514" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17514 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/penalty-abatement/">Penalty Abatement</a></li>
+                                    </ul>
+                                </li>
+                                <li id="menu-item-17512" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-17512 bricks-menu-item">
+                                    <div class="brx-submenu-toggle icon-right"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-preparation/">Tax Preparation</a><button aria-expanded="false" aria-label="Tax Preparation Sub menu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" fill="none" class="menu-item-icon"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button></div>
+                                    <ul class="sub-menu">
+                                        <li id="menu-item-17555" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17555 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/sole-proprietors-self-employed-taxes/">Sole-Proprietors/ Self Employed Taxes</a></li>
+                                        <li id="menu-item-17556" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17556 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/personal-individual-taxes/">Personal/Individual Taxes</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav> <button class="bricks-mobile-menu-toggle" aria-haspopup="true" aria-label="Open mobile menu" aria-expanded="false">
+				<span class="bar-top"></span>
+				<span class="bar-center"></span>
+				<span class="bar-bottom"></span>
+			</button>
+                        <nav class="bricks-mobile-menu-wrapper left">
+                            <ul id="menu-services-menu-1" class="bricks-mobile-menu">
+                                <li class="menu-item menu-item-type-post_type menu-item-object-page current-page-ancestor current-page-parent menu-item-17516 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/">Tax Relief</a></li>
+                                <li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-15250 current_page_item menu-item-has-children menu-item-17511 bricks-menu-item">
+                                    <div class="brx-submenu-toggle icon-right"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/" aria-current="page">Tax Resolution</a><button aria-expanded="false" aria-label="Tax Resolution Sub menu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" fill="none" class="menu-item-icon"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button></div>
+                                    <ul class="sub-menu">
+                                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17517 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/audit-representation/">Audit Representation</a></li>
+                                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17553 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/innocent-spouse-relief/">Innocent Spouse Relief</a></li>
+                                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17554 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/payroll-tax-relief/">Payroll Tax Relief</a></li>
+                                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-17519 bricks-menu-item">
+                                            <div class="brx-submenu-toggle icon-right"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/lien-filing/">Lien Filing</a><button aria-expanded="false" aria-label="Lien Filing Sub menu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" fill="none" class="menu-item-icon"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button></div>
+                                            <ul class="sub-menu">
+                                                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17548 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/appeal-the-linen/">Appeal the Lien</a></li>
+                                                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17549 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/lien-release/">Lien Release</a></li>
+                                                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17550 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/lien-subordination/">Lien Subordination</a></li>
+                                                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17552 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/removing-lien-from-credit/">Removing Lien From Credit</a></li>
+                                                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17551 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/avoiding-tax-liens/">Avoiding Tax Liens</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-17522 bricks-menu-item">
+                                            <div class="brx-submenu-toggle icon-right"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/pension-levy/">Pension Levy</a><button aria-expanded="false" aria-label="Pension Levy Sub menu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" fill="none" class="menu-item-icon"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button></div>
+                                            <ul class="sub-menu">
+                                                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17525 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/state-wage-garnishment/">Wage Garnishment</a></li>
+                                                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17523 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/social-security-levy/">Social Security Levy</a></li>
+                                                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17515 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/irs-bank-levy/">IRS Bank Levy</a></li>
+                                                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17520 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/state-bank-levy/">State Bank Levy</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-17509 bricks-menu-item">
+                                    <div class="brx-submenu-toggle icon-right"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-negotiation/">Tax Negotiation</a><button aria-expanded="false" aria-label="Tax Negotiation Sub menu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" fill="none" class="menu-item-icon"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button></div>
+                                    <ul class="sub-menu">
+                                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17513 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/currently-not-collectible/">Currently Not Collectible</a></li>
+                                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17526 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/irs-installment-plans/">IRS Installment Plans</a></li>
+                                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17510 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/offer-in-compormise/">Offer in Compromise</a></li>
+                                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17514 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/tax-relief/penalty-abatement/">Penalty Abatement</a></li>
+                                    </ul>
+                                </li>
+                                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-17512 bricks-menu-item">
+                                    <div class="brx-submenu-toggle icon-right"><a href="https://www.thetaxdefensegroup.com/tax-relief/tax-preparation/">Tax Preparation</a><button aria-expanded="false" aria-label="Tax Preparation Sub menu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" fill="none" class="menu-item-icon"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button></div>
+                                    <ul class="sub-menu">
+                                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17555 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/sole-proprietors-self-employed-taxes/">Sole-Proprietors/ Self Employed Taxes</a></li>
+                                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17556 bricks-menu-item"><a href="https://www.thetaxdefensegroup.com/personal-individual-taxes/">Personal/Individual Taxes</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="bricks-mobile-menu-overlay"></div>
+                    </div>
+                </div>
+                <div id="brxe-qcrssy" class="brxe-block bricks-lazy-hidden">
+                    <div class="brxe-post-content" data-source="editor">
+                        <h2 class="wp-block-heading">Tax Resolution</h2>
+
+
+
+                        <p>If you have been placed in collections or are facing penalties by the IRS, we at The Tax Defense Group are here to help you find the perfect tax resolution for your tax problems. The Tax Defense Group can provide you with the proper
+                            guidance and advice to help you with your tax problems. Our team are experts in tax resolution and our mission is to fix your tax problems and get you back on track.</p>
+
+
+
+                        <p>Through The Tax Defense Group, there are a number of tax resolution options for each individual:</p>
+
+
+
+                        <p>&#8211;&nbsp;<a href="https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/audit-representation/">Audit Representation</a><br>&#8211;&nbsp;<a href="https://www.thetaxdefensegroup.com/innocent-spouse-relief/">Innocent Spouse Relief</a><br>&#8211;&nbsp;
+                            <a
+                                href="https://www.thetaxdefensegroup.com/payroll-tax-relief/">Payroll Tax Relief</a><br>&#8211;&nbsp;<a href="https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/lien-filing/">Tax Liens</a><br>&#8211;&nbsp;<a href="https://www.thetaxdefensegroup.com/tax-relief/tax-resolution/pension-levy/">Tax Levies</a></p>
+
+
+
+                        <p>If you have any questions on how we can help you with your tax problems or the IRS collection process, please contact The Tax Defense Group today.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer id="brx-footer">
+        <section id="brxe-84059a" class="brxe-section bricks-lazy-hidden">
+            <section class="brxe-section footer-cta bricks-lazy-hidden">
+                <div id="brxe-d3a2a9" class="brxe-container footer-cta-container bg--white box-shadow--xl radius radius--l bricks-lazy-hidden">
+                    <div class="brxe-block footer-cta__content bricks-lazy-hidden">
+                        <h2 class="brxe-heading footer-cta__heading">Stop worrying about tax problems today!<br></h2><a class="brxe-button fb-btn-reveal fb-btn-reveal--small fb-header-four__btn fb-btn-reveal--primary bricks-button" href="https://www.thetaxdefensegroup.com/contact-us/">Free Consultation<i class="ti-angle-right"></i></a></div>
+                    <div
+                        class="brxe-block footer-cta__media bricks-lazy-hidden">
+                        <figure class="brxe-image footer-cta__image tag"><img width="1024" height="683" src="data:image/svg+xml,%3Csvg%20xmlns=&#039;http://www.w3.org/2000/svg&#039;%20viewBox=&#039;0%200%201024%20683&#039;%3E%3C/svg%3E" class="css-filter size-large bricks-lazy-hidden" alt="" decoding="async"
+                                data-src="https://www.thetaxdefensegroup.com/wp-content/uploads/2024/07/TDGHeadshots-074-1024x683.jpg" data-type="string" data-sizes="(max-width: 1024px) 100vw, 1024px" data-srcset="https://www.thetaxdefensegroup.com/wp-content/uploads/2024/07/TDGHeadshots-074-1024x683.jpg 1024w, https://www.thetaxdefensegroup.com/wp-content/uploads/2024/07/TDGHeadshots-074-600x400.jpg 600w, https://www.thetaxdefensegroup.com/wp-content/uploads/2024/07/TDGHeadshots-074-768x512.jpg 768w, https://www.thetaxdefensegroup.com/wp-content/uploads/2024/07/TDGHeadshots-074-1536x1025.jpg 1536w, https://www.thetaxdefensegroup.com/wp-content/uploads/2024/07/TDGHeadshots-074.jpg 2048w"
+                            /></figure>
+                </div>
+                </div>
+            </section>
+        </section>
+        <section class="brxe-section footer-14 bricks-lazy-hidden">
+            <div class="brxe-container footer-14-bottom-container bricks-lazy-hidden">
+                <div class="brxe-block footer-bottom__left bricks-lazy-hidden">
+                    <div class="brxe-div footer-brand width--xs bricks-lazy-hidden"><a id="brxe-f2c3c2" class="brxe-logo footer-brand__logo" href="https://www.thetaxdefensegroup.com"><img width="363" height="83" src="https://www.thetaxdefensegroup.com/wp-content/uploads/2021/01/DK-4150.png" class="bricks-site-logo css-filter" alt="Tax Defense Group" loading="eager" decoding="async" /></a></div>
+                    <div
+                        class="brxe-div footer-bottom__copyright bricks-lazy-hidden">
+                        <p class="brxe-text-basic footer-copyright">© 2025 Tax Defense Group.</p>
+                </div>
+            </div>
+            <nav id="brxe-72b0cc" class="brxe-div footer-nav-legal bricks-lazy-hidden" aria-label="Legal">
+                <ul id="brxe-3deb00" class="brxe-block footer-legal-nav list--none bricks-lazy-hidden">
+                    <li class="brxe-div footer-legal__li bricks-lazy-hidden"><a class="brxe-text-link footer-legal__link-text" href="https://www.thetaxdefensegroup.com/privacy-policy-legal-disclaimer/">Privacy Policy & Legal Disclaimer</a></li>
+                </ul>
+            </nav>
+            </div>
+        </section>
+    </footer>
+    <script type="rocketlazyloadscript" data-rocket-src="https://www.thetaxdefensegroup.com/wp-content/plugins/embed-any-document/js/pdfobject.min.js?ver=2.7.7" id="awsm-ead-pdf-object-js" data-rocket-defer defer></script>
+    <script id="awsm-ead-public-js-extra">
+        var eadPublic = [];
+    </script>
+    <script type="rocketlazyloadscript" data-rocket-src="https://www.thetaxdefensegroup.com/wp-content/plugins/embed-any-document/js/embed-public.min.js?ver=2.7.7" id="awsm-ead-public-js" data-rocket-defer defer></script>
+    <script type="rocketlazyloadscript" id="pll_cookie_script-js-after">
+        (function() { var expirationDate = new Date(); expirationDate.setTime( expirationDate.getTime() + 31536000 * 1000 ); document.cookie = "pll_language=en; expires=" + expirationDate.toUTCString() + "; path=/; secure; SameSite=Lax"; }());
+    </script>
+    <script id="bricks-scripts-js-extra">
+        var bricksData = {
+            "debug": "",
+            "locale": "en_US",
+            "ajaxUrl": "https:\/\/www.thetaxdefensegroup.com\/wp-admin\/admin-ajax.php",
+            "restApiUrl": "https:\/\/www.thetaxdefensegroup.com\/wp-json\/bricks\/v1\/",
+            "nonce": "28e883c87b",
+            "formNonce": "9d79369b00",
+            "wpRestNonce": "d06138afc2",
+            "postId": "15250",
+            "recaptchaIds": [],
+            "animatedTypingInstances": [],
+            "videoInstances": [],
+            "splideInstances": [],
+            "tocbotInstances": [],
+            "swiperInstances": [],
+            "queryLoopInstances": [],
+            "interactions": [],
+            "filterInstances": [],
+            "isotopeInstances": [],
+            "mapStyles": {
+                "ultraLightWithLabels": {
+                    "label": "Ultra light with labels",
+                    "style": "[ { \"featureType\": \"water\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#e9e9e9\" }, { \"lightness\": 17 } ] }, { \"featureType\": \"landscape\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#f5f5f5\" }, { \"lightness\": 20 } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#ffffff\" }, { \"lightness\": 17 } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"geometry.stroke\", \"stylers\": [ { \"color\": \"#ffffff\" }, { \"lightness\": 29 }, { \"weight\": 0.2 } ] }, { \"featureType\": \"road.arterial\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#ffffff\" }, { \"lightness\": 18 } ] }, { \"featureType\": \"road.local\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#ffffff\" }, { \"lightness\": 16 } ] }, { \"featureType\": \"poi\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#f5f5f5\" }, { \"lightness\": 21 } ] }, { \"featureType\": \"poi.park\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#dedede\" }, { \"lightness\": 21 } ] }, { \"elementType\": \"labels.text.stroke\", \"stylers\": [ { \"visibility\": \"on\" }, { \"color\": \"#ffffff\" }, { \"lightness\": 16 } ] }, { \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"saturation\": 36 }, { \"color\": \"#333333\" }, { \"lightness\": 40 } ] }, { \"elementType\": \"labels.icon\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"transit\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#f2f2f2\" }, { \"lightness\": 19 } ] }, { \"featureType\": \"administrative\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#fefefe\" }, { \"lightness\": 20 } ] }, { \"featureType\": \"administrative\", \"elementType\": \"geometry.stroke\", \"stylers\": [ { \"color\": \"#fefefe\" }, { \"lightness\": 17 }, { \"weight\": 1.2 } ] } ]"
+                },
+                "blueWater": {
+                    "label": "Blue water",
+                    "style": "[ { \"featureType\": \"administrative\", \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"color\": \"#444444\" } ] }, { \"featureType\": \"landscape\", \"elementType\": \"all\", \"stylers\": [ { \"color\": \"#f2f2f2\" } ] }, { \"featureType\": \"poi\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"road\", \"elementType\": \"all\", \"stylers\": [ { \"saturation\": -100 }, { \"lightness\": 45 } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"road.arterial\", \"elementType\": \"labels.icon\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"transit\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"water\", \"elementType\": \"all\", \"stylers\": [ { \"color\": \"#46bcec\" }, { \"visibility\": \"on\" } ] } ]"
+                },
+                "lightDream": {
+                    "label": "Light dream",
+                    "style": "[ { \"featureType\": \"landscape\", \"stylers\": [ { \"hue\": \"#FFBB00\" }, { \"saturation\": 43.400000000000006 }, { \"lightness\": 37.599999999999994 }, { \"gamma\": 1 } ] }, { \"featureType\": \"road.highway\", \"stylers\": [ { \"hue\": \"#FFC200\" }, { \"saturation\": -61.8 }, { \"lightness\": 45.599999999999994 }, { \"gamma\": 1 } ] }, { \"featureType\": \"road.arterial\", \"stylers\": [ { \"hue\": \"#FF0300\" }, { \"saturation\": -100 }, { \"lightness\": 51.19999999999999 }, { \"gamma\": 1 } ] }, { \"featureType\": \"road.local\", \"stylers\": [ { \"hue\": \"#FF0300\" }, { \"saturation\": -100 }, { \"lightness\": 52 }, { \"gamma\": 1 } ] }, { \"featureType\": \"water\", \"stylers\": [ { \"hue\": \"#0078FF\" }, { \"saturation\": -13.200000000000003 }, { \"lightness\": 2.4000000000000057 }, { \"gamma\": 1 } ] }, { \"featureType\": \"poi\", \"stylers\": [ { \"hue\": \"#00FF6A\" }, { \"saturation\": -1.0989010989011234 }, { \"lightness\": 11.200000000000017 }, { \"gamma\": 1 } ] } ]"
+                },
+                "blueEssence": {
+                    "label": "Blue essence",
+                    "style": "[ { \"featureType\": \"landscape.natural\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"visibility\": \"on\" }, { \"color\": \"#e0efef\" } ] }, { \"featureType\": \"poi\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"visibility\": \"on\" }, { \"hue\": \"#1900ff\" }, { \"color\": \"#c0e8e8\" } ] }, { \"featureType\": \"road\", \"elementType\": \"geometry\", \"stylers\": [ { \"lightness\": 100 }, { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"road\", \"elementType\": \"labels\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"transit.line\", \"elementType\": \"geometry\", \"stylers\": [ { \"visibility\": \"on\" }, { \"lightness\": 700 } ] }, { \"featureType\": \"water\", \"elementType\": \"all\", \"stylers\": [ { \"color\": \"#7dcdcd\" } ] } ]"
+                },
+                "appleMapsesque": {
+                    "label": "Apple maps-esque",
+                    "style": "[ { \"featureType\": \"landscape.man_made\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#f7f1df\" } ] }, { \"featureType\": \"landscape.natural\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#d0e3b4\" } ] }, { \"featureType\": \"landscape.natural.terrain\", \"elementType\": \"geometry\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"poi\", \"elementType\": \"labels\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"poi.business\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"poi.medical\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#fbd3da\" } ] }, { \"featureType\": \"poi.park\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#bde6ab\" } ] }, { \"featureType\": \"road\", \"elementType\": \"geometry.stroke\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"road\", \"elementType\": \"labels\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#ffe15f\" } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"geometry.stroke\", \"stylers\": [ { \"color\": \"#efd151\" } ] }, { \"featureType\": \"road.arterial\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#ffffff\" } ] }, { \"featureType\": \"road.local\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"black\" } ] }, { \"featureType\": \"transit.station.airport\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#cfb2db\" } ] }, { \"featureType\": \"water\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#a2daf2\" } ] } ]"
+                },
+                "paleDawn": {
+                    "label": "Pale dawn",
+                    "style": "[ { \"featureType\": \"administrative\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"on\" }, { \"lightness\": 33 } ] }, { \"featureType\": \"landscape\", \"elementType\": \"all\", \"stylers\": [ { \"color\": \"#f2e5d4\" } ] }, { \"featureType\": \"poi.park\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#c5dac6\" } ] }, { \"featureType\": \"poi.park\", \"elementType\": \"labels\", \"stylers\": [ { \"visibility\": \"on\" }, { \"lightness\": 20 } ] }, { \"featureType\": \"road\", \"elementType\": \"all\", \"stylers\": [ { \"lightness\": 20 } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#c5c6c6\" } ] }, { \"featureType\": \"road.arterial\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#e4d7c6\" } ] }, { \"featureType\": \"road.local\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#fbfaf7\" } ] }, { \"featureType\": \"water\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"on\" }, { \"color\": \"#acbcc9\" } ] } ]"
+                },
+                "neutralBlue": {
+                    "label": "Neutral blue",
+                    "style": "[ { \"featureType\": \"water\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#193341\" } ] }, { \"featureType\": \"landscape\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#2c5a71\" } ] }, { \"featureType\": \"road\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#29768a\" }, { \"lightness\": -37 } ] }, { \"featureType\": \"poi\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#406d80\" } ] }, { \"featureType\": \"transit\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#406d80\" } ] }, { \"elementType\": \"labels.text.stroke\", \"stylers\": [ { \"visibility\": \"on\" }, { \"color\": \"#3e606f\" }, { \"weight\": 2 }, { \"gamma\": 0.84 } ] }, { \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"color\": \"#ffffff\" } ] }, { \"featureType\": \"administrative\", \"elementType\": \"geometry\", \"stylers\": [ { \"weight\": 0.6 }, { \"color\": \"#1a3541\" } ] }, { \"elementType\": \"labels.icon\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"poi.park\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#2c5a71\" } ] } ]"
+                },
+                "avocadoWorld": {
+                    "label": "Avocado world",
+                    "style": "[ { \"featureType\": \"water\", \"elementType\": \"geometry\", \"stylers\": [ { \"visibility\": \"on\" }, { \"color\": \"#aee2e0\" } ] }, { \"featureType\": \"landscape\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#abce83\" } ] }, { \"featureType\": \"poi\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#769E72\" } ] }, { \"featureType\": \"poi\", \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"color\": \"#7B8758\" } ] }, { \"featureType\": \"poi\", \"elementType\": \"labels.text.stroke\", \"stylers\": [ { \"color\": \"#EBF4A4\" } ] }, { \"featureType\": \"poi.park\", \"elementType\": \"geometry\", \"stylers\": [ { \"visibility\": \"simplified\" }, { \"color\": \"#8dab68\" } ] }, { \"featureType\": \"road\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"road\", \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"color\": \"#5B5B3F\" } ] }, { \"featureType\": \"road\", \"elementType\": \"labels.text.stroke\", \"stylers\": [ { \"color\": \"#ABCE83\" } ] }, { \"featureType\": \"road\", \"elementType\": \"labels.icon\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"road.local\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#A4C67D\" } ] }, { \"featureType\": \"road.arterial\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#9BBF72\" } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#EBF4A4\" } ] }, { \"featureType\": \"transit\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"administrative\", \"elementType\": \"geometry.stroke\", \"stylers\": [ { \"visibility\": \"on\" }, { \"color\": \"#87ae79\" } ] }, { \"featureType\": \"administrative\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#7f2200\" }, { \"visibility\": \"off\" } ] }, { \"featureType\": \"administrative\", \"elementType\": \"labels.text.stroke\", \"stylers\": [ { \"color\": \"#ffffff\" }, { \"visibility\": \"on\" }, { \"weight\": 4.1 } ] }, { \"featureType\": \"administrative\", \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"color\": \"#495421\" } ] }, { \"featureType\": \"administrative.neighborhood\", \"elementType\": \"labels\", \"stylers\": [ { \"visibility\": \"off\" } ] } ]"
+                },
+                "gowalla": {
+                    "label": "Gowalla",
+                    "style": "[ { \"featureType\": \"administrative.land_parcel\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"landscape.man_made\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"poi\", \"elementType\": \"labels\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"road\", \"elementType\": \"labels\", \"stylers\": [ { \"visibility\": \"simplified\" }, { \"lightness\": 20 } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"geometry\", \"stylers\": [ { \"hue\": \"#f49935\" } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"labels\", \"stylers\": [ { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"road.arterial\", \"elementType\": \"geometry\", \"stylers\": [ { \"hue\": \"#fad959\" } ] }, { \"featureType\": \"road.arterial\", \"elementType\": \"labels\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"road.local\", \"elementType\": \"geometry\", \"stylers\": [ { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"road.local\", \"elementType\": \"labels\", \"stylers\": [ { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"transit\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"water\", \"elementType\": \"all\", \"stylers\": [ { \"hue\": \"#a1cdfc\" }, { \"saturation\": 30 }, { \"lightness\": 49 } ] } ]"
+                }
+            },
+            "facebookAppId": "",
+            "headerPosition": "top",
+            "offsetLazyLoad": "300",
+            "baseUrl": "https:\/\/www.thetaxdefensegroup.com\/tax-relief\/tax-resolution\/",
+            "useQueryFilter": "1",
+            "pageFilters": [],
+            "language": "en",
+            "wpmlUrlFormat": "",
+            "multilangPlugin": "polylang",
+            "i18n": {
+                "openAccordion": "Open accordion",
+                "openMobileMenu": "Open mobile menu",
+                "closeMobileMenu": "Close mobile menu"
+            },
+            "selectedFilters": [],
+            "filterNiceNames": []
+        };
+    </script>
+    <script type="rocketlazyloadscript" data-rocket-src="https://www.thetaxdefensegroup.com/wp-content/themes/bricks/assets/js/bricks.min.js?ver=1730927817" id="bricks-scripts-js" data-rocket-defer defer></script>
+    <script type="rocketlazyloadscript" data-rocket-src="https://www.thetaxdefensegroup.com/wp-content/themes/bricks/assets/js/filters.min.js?ver=1730927817" id="bricks-filters-js" data-rocket-defer defer></script>
+    <script>
+        window.lazyLoadOptions = [{
+            elements_selector: "img[data-lazy-src],.rocket-lazyload,iframe[data-lazy-src]",
+            data_src: "lazy-src",
+            data_srcset: "lazy-srcset",
+            data_sizes: "lazy-sizes",
+            class_loading: "lazyloading",
+            class_loaded: "lazyloaded",
+            threshold: 300,
+            callback_loaded: function(element) {
+                if (element.tagName === "IFRAME" && element.dataset.rocketLazyload == "fitvidscompatible") {
+                    if (element.classList.contains("lazyloaded")) {
+                        if (typeof window.jQuery != "undefined") {
+                            if (jQuery.fn.fitVids) {
+                                jQuery(element).parent().fitVids()
+                            }
+                        }
+                    }
+                }
+            }
+        }, {
+            elements_selector: ".rocket-lazyload",
+            data_src: "lazy-src",
+            data_srcset: "lazy-srcset",
+            data_sizes: "lazy-sizes",
+            class_loading: "lazyloading",
+            class_loaded: "lazyloaded",
+            threshold: 300,
+        }];
+        window.addEventListener('LazyLoad::Initialized', function(e) {
+            var lazyLoadInstance = e.detail.instance;
+            if (window.MutationObserver) {
+                var observer = new MutationObserver(function(mutations) {
+                    var image_count = 0;
+                    var iframe_count = 0;
+                    var rocketlazy_count = 0;
+                    mutations.forEach(function(mutation) {
+                        for (var i = 0; i < mutation.addedNodes.length; i++) {
+                            if (typeof mutation.addedNodes[i].getElementsByTagName !== 'function') {
+                                continue
+                            }
+                            if (typeof mutation.addedNodes[i].getElementsByClassName !== 'function') {
+                                continue
+                            }
+                            images = mutation.addedNodes[i].getElementsByTagName('img');
+                            is_image = mutation.addedNodes[i].tagName == "IMG";
+                            iframes = mutation.addedNodes[i].getElementsByTagName('iframe');
+                            is_iframe = mutation.addedNodes[i].tagName == "IFRAME";
+                            rocket_lazy = mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');
+                            image_count += images.length;
+                            iframe_count += iframes.length;
+                            rocketlazy_count += rocket_lazy.length;
+                            if (is_image) {
+                                image_count += 1
+                            }
+                            if (is_iframe) {
+                                iframe_count += 1
+                            }
+                        }
+                    });
+                    if (image_count > 0 || iframe_count > 0 || rocketlazy_count > 0) {
+                        lazyLoadInstance.update()
+                    }
+                });
+                var b = document.getElementsByTagName("body")[0];
+                var config = {
+                    childList: !0,
+                    subtree: !0
+                };
+                observer.observe(b, config)
+            }
+        }, !1)
+    </script>
+    <script data-no-minify="1" async src="https://www.thetaxdefensegroup.com/wp-content/plugins/wp-rocket/assets/js/lazyload/17.8.3/lazyload.min.js"></script>
+    <script>
+        function lazyLoadThumb(e, alt, l) {
+            var t = '<img data-lazy-src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" width="480" height="360"><noscript><img src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" width="480" height="360"></noscript>',
+                a = '<button class="play" aria-label="Play Youtube video"></button>';
+            if (l) {
+                t = t.replace('data-lazy-', '');
+                t = t.replace('loading="lazy"', '');
+                t = t.replace(/<noscript>.*?<\/noscript>/g, '');
+            }
+            t = t.replace('alt=""', 'alt="' + alt + '"');
+            return t.replace("ID", e) + a
+        }
+
+        function lazyLoadYoutubeIframe() {
+            var e = document.createElement("iframe"),
+                t = "ID?autoplay=1";
+            t += 0 === this.parentNode.dataset.query.length ? "" : "&" + this.parentNode.dataset.query;
+            e.setAttribute("src", t.replace("ID", this.parentNode.dataset.src)), e.setAttribute("frameborder", "0"), e.setAttribute("allowfullscreen", "1"), e.setAttribute("allow", "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"), this.parentNode.parentNode.replaceChild(e, this.parentNode)
+        }
+        document.addEventListener("DOMContentLoaded", function() {
+            var exclusions = [];
+            var e, t, p, u, l, a = document.getElementsByClassName("rll-youtube-player");
+            for (t = 0; t < a.length; t++)(e = document.createElement("div")), (u = 'https://i.ytimg.com/vi/ID/hqdefault.jpg'), (u = u.replace('ID', a[t].dataset.id)), (l = exclusions.some(exclusion => u.includes(exclusion))), e.setAttribute("data-id", a[t].dataset.id), e.setAttribute("data-query", a[t].dataset.query), e.setAttribute("data-src", a[t].dataset.src), (e.innerHTML = lazyLoadThumb(a[t].dataset.id, a[t].dataset.alt, l)), a[t].appendChild(e), (p = e.querySelector(".play")), (p.onclick = lazyLoadYoutubeIframe)
+        });
+    </script>
+    <script>
+        var rocket_beacon_data = {
+            "ajax_url": "https:\/\/www.thetaxdefensegroup.com\/wp-admin\/admin-ajax.php",
+            "nonce": "2b494f7ade",
+            "url": "https:\/\/www.thetaxdefensegroup.com\/tax-relief\/tax-resolution",
+            "is_mobile": true,
+            "width_threshold": 393,
+            "height_threshold": 830,
+            "delay": 500,
+            "debug": null,
+            "status": {
+                "atf": true,
+                "lrc": true,
+                "preconnect_external_domain": true
+            },
+            "elements": "img, video, picture, p, main, div, li, svg, section, header, span",
+            "lrc_threshold": 1800,
+            "preconnect_external_domain_elements": ["link", "script", "iframe"],
+            "preconnect_external_domain_exclusions": ["static.cloudflareinsights.com", "rel=\"profile\"", "rel=\"preconnect\"", "rel=\"dns-prefetch\"", "rel=\"icon\""]
+        }
+    </script>
+    <script data-name="wpr-wpr-beacon" src='https://www.thetaxdefensegroup.com/wp-content/plugins/wp-rocket/assets/js/wpr-beacon.min.js' async></script>
+</body>
+
+</html>
+<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me -->
